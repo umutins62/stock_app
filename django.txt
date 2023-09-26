@@ -1,0 +1,315 @@
+GİT İŞLERİ
+----------------------------------
+echo "# my_project" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin git: ---------------------
+git push -u origin main
+-------------------------------------
+PYTHON ENVİRON YÜKLE
+-------------------------------------
+docker.env oluştur
+DEBUG=on
+SECRET_KEY=*****************************************
+ALLOWED_HOSTS=127.0.0.1,localhost
+CSRF_TRUSTED_ORIGINS=http://*.127.0.0.1,http://*.localhost
+#EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
+#EMAIL_HOST=smtp.gmail.com
+#EMAIL_HOST_USER=
+#EMAIL_HOST_PASSWORD=
+#EMAIL_PORT=587
+#EMAIL_USE_TLS=True
+DATABASE_URL=postgres://_user:_pass@postgres:5432/_db
+
+POSTGRES_USER=_user
+POSTGRES_PASSWORD=_pass
+POSTGRES_DB=_db
+
+----------------------------------------------------
+SETTİNGS DOSYASI DÜZENLEME
+---------------------------------------------------
+import environ
+env = environ.Env(DEBUG=(bool, True), )
+environ.Env.read_env()
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = env("SECRET_KEY")
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = env("DEBUG")
+
+ALLOWED_HOSTS = env("ALLOWED_HOSTS", cast=list)
+
+CSRF_TRUSTED_ORIGINS = env("CSRF_TRUSTED_ORIGINS", cast=list)
+
+DATABASES = {
+    'default': env.db()
+}
+
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
+
+# DEFAULT_FROM_EMAIL = 'Umut ÇELİK <umutcelik6230@gmail.com>'
+# EMAIL_BACKEND = env('EMAIL_BACKEND')
+# EMAIL_HOST = env('EMAIL_HOST')
+# EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+# EMAIL_PORT = env('EMAIL_PORT')
+# EMAIL_USE_TLS = env('EMAIL_USE_TLS')
+----------------------------------------------------------------------------------
+DOCKER İŞLEMLERİ
+---------------------------------------------------------------------------------
+
+docker compose build  ------oluştur
+docker compose up     ------çalıştır
+docker compose dowm   ------kapat
+-------------------------------------------------------
+Docker dosyası:
+--------------------------------------------------------
+# docker için python image kur
+FROM python:3.10-slim
+
+RUN apt-get update
+
+RUN apt-get install libpq-dev -y
+RUN apt-get install -y python3-dev build-essential
+RUN apt-get install  postgresql-client -y
+
+ENV PYTHONDONWRITEBYTECODE 1
+ENV VIRTUAL_ENV=/opt/venv
+
+RUN pip install --upgrade pip
+
+RUN pip install virtualenv && python -m virtualenv $VIRTUAL_ENV
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+
+ADD ./requirements.txt /tmp/requirements.txt
+
+RUN pip install -r /tmp/requirements.txt
+
+COPY . /srv/app
+
+WORKDIR /srv/app
+------------------------------------------------------
+
+docker compose run app python manage.py makemigrations
+
+docker compose run app python manage.py migrate
+
+pip install --upgrade pip
+
+docker compose run app pip freeze > requirements.txt
+
+docker compose run app python manage.py createsuperuser
+
+
+docker-compose.yml:
+
+version: "3.8"
+services:
+  postgres:
+    image: postgres:latest
+    env_file:
+      - djangoStockApp/docker.env
+    ports:
+      - "5432:5432"
+    volumes:
+      - "postgresql-data:/var/lib/postgresql/data"
+    command: -p 5432
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - postgres
+    env_file:
+      djangoStockApp/docker.env
+    volumes:
+        - .:/srv/app
+    ports:
+      - "0.0.0.0:8000:8000"
+    command: python manage.py runserver 0.0.0.0:8000
+
+
+
+volumes:
+  postgresql-data:
+  static_data:
+
+-----------------------------------
+.gitignore
+-------------------------------------
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
+#   However, in case of collaboration, if having platform-specific dependencies or dependencies
+#   having no cross-platform support, pipenv may install dependencies that don't work, or not
+#   install all needed dependencies.
+#Pipfile.lock
+
+# PEP 582; used by e.g. github.com/David-OConnor/pyflow
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+
+*.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+.idea
+media
+/db.sqlite3
+/docker.env
+
+
+
+# Environment variables file
+docker.env
+
+
+-------------------------------------------
+requirement.txt
+-----------------------------------------
+
+
+asgiref==3.7.2
+distlib==0.3.7
+Django==4.2.5
+django-environ==0.11.2
+environ==1.0
+filelock==3.12.3
+gunicorn==21.2.0
+packaging==23.1
+Pillow==10.0.0
+platformdirs==3.10.0
+psycopg2==2.9.7
+sqlparse==0.4.4
+typing_extensions==4.7.1
+tzdata==2023.3
+virtualenv==20.24.5
+

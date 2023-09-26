@@ -1,0 +1,102 @@
+ines.ns.cloudflare.com
+leonidas.ns.cloudflare.com
+
+
+pyinstaller --onefile --windowed --add-data="images/*.png;images" main.py
+
+pyinstaller --onefile --windowed --icon=app.ico --add-data="images/*.png;images" main.py
+
+
+git işlemleri
+
+echo "# my_project" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin git@github.com:umutins62/django_portfolio.git
+git push -u origin main
+
+// publik key ile github da alış veriş sağlıyorsun...
+ssh-keygen -t rsa -b 4096 -C "umutins62@hotmail.com"
+
+GitHub'a push işlemi yaparken "Push to origin/main was rejected" hatası aldıysanız, bunu çözmek için bazı adımlar izleyebilirsiniz:
+
+1. Öncelikle uzak değişiklikleri yerel deponuza çekmek için `git pull origin main` komutunu kullanın. Bu sayede yerel deponuz güncellenir.
+
+2. Eğer çakışan dosyalar varsa, bu dosyalardaki değişiklikleri birleştirmeniz gerekecek. `git merge` komutu ile birleştirme yapabilirsiniz. 
+
+3. Çakışmaları çözdükten sonra tekrar `git push origin main` komutu ile push işlemini deneyin.
+
+4. Yine hata alıyorsanız, uzak daldaki tüm değişiklikleri silip yereldekini yazmak için `git push -f origin main` komutunu kullanabilirsiniz. Ancak bu işlem uzak verilerin kaybolmasına sebep olabilir, dikkatli kullanın.
+
+5. Push işlemi başarıyla tamamlandıysa uzak depodaki değişiklikleri yerel deponuza yansıtmak için `git pull origin main` komutunu tekrar çalıştırın.
+
+Bu adımlar ile çoğu durumda push işlemini başarıyla gerçekleştirebilirsiniz. Detaylar için Git dokümantasyonuna başvurabilirsiniz.
+
+
+
+İşte commit mesajları için kullanılan etiketlerin Türkçe açıklamaları:
+
+*   `feat`: (Kullanıcı için yeni bir özellik, derleme betiği için yeni bir özellik değil) 
+
+*   `fix`: (Kullanıcı için bir hata düzeltmesi, derleme betiği için bir düzeltme değil)
+
+*   `docs`: (Dokümantasyondaki değişiklikler)
+
+*   `style`: (Biçimlendirme, eksik noktalı virgül vb.; üretim kodunda değişiklik yok)
+
+*   `refactor`: (Üretim kodunun yeniden düzenlenmesi, ör. bir değişkenin yeniden adlandırılması)
+
+*   `test`: (Eksik testlerin eklenmesi, testlerin yeniden düzenlenmesi; üretim kodunda değişiklik yok) 
+
+*   `chore`: (grunt görevlerinin vb. güncellenmesi; üretim kodunda değişiklik yok)
+
+---DOCKER--
+
+docker compose run app python manage.py makemigrations
+
+docker compose run app python manage.py migrate
+
+pip install --upgrade pip
+
+docker compose run app pip freeze > requirements.txt
+
+docker compose run app python manage.py createsuperuser
+
+
+GitHub'da silinen bir dosyayı geri almanın birkaç yolu var:
+
+1. Eğer dosya son commit'inizden sonra silindi ise, o commit'i geri alabilirsiniz:
+
+```
+git reset --hard HEAD~1
+```
+
+Bu son commit'i geri alır ve o commit'deki tüm değişiklikleri geri yükler.
+
+2. Eğer dosya daha eski bir commit'te silinmişse, o commit'i bulup o commit'deki halini geri yüklemelisiniz:
+
+```
+git checkout <commit-hash> -- <file-path> 
+```
+
+3. Eğer dosya çok eski bir commit'te silinmişse, git reflog komutu ile tüm commit geçmişinizi görüp ilgili commit'i bulabilirsiniz:
+
+```
+git reflog
+```
+
+Sonra o commit'i checkout yapıp dosyayı geri alabilirsiniz.
+
+4. Son olarak, eğer hiçbir şekilde commit geçmişinde dosyayı bulamıyorsanız, GitHub üzerinden dosyanın eski hallerine erişmeyi deneyebilirsiniz. Bazen GitHub dosyanın silinmeden önceki halini saklı tutabilir.
+
+Bu yöntemlerle silinen bir dosyayı genellikle geri almak mümkündür.
+
+
+
+
+
+
+
+   
