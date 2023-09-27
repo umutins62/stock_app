@@ -1,10 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>hello world</h1>
-</body>
-</html>
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+
+    <div class="flex min-h-screen 2xl:max-w-7xl 2xl:mx-auto 2xl:border-x-2 2xl:border-indigo-50 ">
+        {% include '_sidebar.html' %}
+
+        <main class="bg-indigo-50/60 w-full py-10 px-3 sm:px-10">
+
+            {% include '_start.html' %}
+
+
+            {% include '_invoices.html' %}
+
+            {% include '_tables.html' %}
+
+
+
+        </main>
+    </div>
+{% endblock %}
+
+
