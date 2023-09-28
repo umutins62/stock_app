@@ -19,7 +19,7 @@ class Stock(models.Model):
         help_text='Please enter your name')
 
     def __str__(self):
-        return self.name
+        return self.symbol
 
     class Meta:
         verbose_name = 'Stock'
