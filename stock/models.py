@@ -43,7 +43,9 @@ class Transaction(models.Model):
     sell_price = models.DecimalField(
         verbose_name='Sell Price',
         max_digits=10,
-        decimal_places=2)
+        decimal_places=2,
+        default=0.00,
+    )
 
     shares = models.IntegerField(
         verbose_name='Shares',
@@ -92,7 +94,7 @@ class MoneyTransaction(models.Model):
     )
 
     def __str__(self):
-        return self.user.name
+        return self.user.email
 
     class Meta:
         verbose_name = 'Money Transaction'
