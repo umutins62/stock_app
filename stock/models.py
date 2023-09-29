@@ -46,18 +46,27 @@ class Transaction(models.Model):
         decimal_places=2,
         default=0.00,
     )
+    status=models.CharField(
+        verbose_name='status',
+        default='',
+        max_length=50,
+        blank=True,
+        help_text='Please enter your status')
+
+
 
     shares = models.IntegerField(
         verbose_name='Shares',
 
     )
+
     transaction_date = models.DateTimeField(
         verbose_name='Transaction Date',
         auto_now_add=True,
         blank=True,
-        help_text='Please enter your transaction date'
+        help_text='Please enter your transaction date')
 
-    )
+
     transaction_edit_date= models.DateTimeField(
         verbose_name='Transaction Edit Date',
         auto_now=True,

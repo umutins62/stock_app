@@ -138,4 +138,6 @@ media
 
 # Environment variables file
 docker.env
+*.xlsx
+.xlsx
 stock.xlsx

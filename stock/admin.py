@@ -12,10 +12,11 @@ class stockAdmin(admin.ModelAdmin):
         model = Stock
 @admin.register(Transaction)
 class transactionAdmin(admin.ModelAdmin):
-    list_display = ['id','user','stock','buy_price','sell_price','shares','transaction_edit_date','transaction_date'
+    list_display = ['id','user','stock','buy_price','sell_price','shares','status','transaction_edit_date',
+                    'transaction_date'
 
                     ]
-    list_editable = ['sell_price','shares']
+    list_editable = ['sell_price','shares','status']
 
     class Meta:
         model = Transaction
