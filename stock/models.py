@@ -46,6 +46,15 @@ class Transaction(models.Model):
         decimal_places=2,
         default=0.00,
     )
+
+    profit = models.DecimalField(
+        verbose_name='profit',
+        max_digits=10,
+        decimal_places=2,
+        default=0.00,
+    )
+
+
     status=models.CharField(
         verbose_name='status',
         default='',
@@ -73,6 +82,11 @@ class Transaction(models.Model):
         blank=True,
         help_text='Please enter your transaction edit date'
     )
+
+    def save(self, *args, **kwargs):
+        # Profit alanını hesapla ve kaydet
+        self.profit = (self.sell_price - self.buy_price) * self.shares
+        super().save(*args, **kwargs)
 
 
     def __str__(self):
@@ -133,6 +147,8 @@ class GeneralSettings(models.Model):
 
     def __str__(self):
         return self.name
+
+
 
     class Meta:
         verbose_name = 'General Setting'

@@ -27,6 +27,12 @@ def index(request):
     profit = total_result_sell - total_result_buy
     yuzde = (profit / total_result_buy)*100
 
+    en_buyuk_profit = Transaction.objects.all().order_by('-profit').first()
+    en_kucuk_profit = Transaction.objects.all().order_by('profit').first()
+
+
+
+
     context = {
         'stocks': stocks,
         'transactions': transactions,
@@ -35,16 +41,21 @@ def index(request):
         'image': image,
         'total_sum': total_sum,
         'profit': profit,
-        'yuzde': yuzde
+        'yuzde': yuzde,
+        'en_buyuk_profit': en_buyuk_profit,
+        'en_kucuk_profit': en_kucuk_profit,
+
     }
 
     return render(request, "index.html", context=context)
 
-# def islem_kaydet(hisse_adi, alim_satim, miktar, fiyat):
-#     yeni_islem = Transaction.objects.create(hisse_adi=hisse_adi, alim_satim=alim_satim, miktar=miktar, fiyat=fiyat)
-#
-#     if alim_satim == 'ALIM':
-#         Anapara.objects.filter(pk=1).update(tutar=F('tutar') + miktar * fiyat)
-#
-#     if alim_satim == 'SATIM':
-#         Anapara.objects.filter(pk=1).update(tutar=F('tutar') - miktar * fiyat)
+
+def alis_satis_hesapla(Transaction):
+    kar = (Transaction.sell_price - Transaction.buy_price) * Transaction.shares
+    zarar = max(0, (Transaction.buy_price - Transaction.sell_price) * Transaction.shares)
+
+    return kar, zarar
+
+# Örnek kullanım:
+# hisse = Hisse.objects.get(pk=1)
+# alis_satis_hesapla(hisse)

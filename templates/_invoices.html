@@ -34,18 +34,18 @@
                 <br>
                 <div class="inline-flex relative">
                     {% if profit < 0 %}
-                         <input class=" text-gray-600  tracking-wider pl-4  py-3 rounded-lg
+                        <input class=" text-gray-600  tracking-wider pl-4  py-3 rounded-lg
                          appearance-none w-full outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-300"
-                           id="client" name="client" type="text" value="{{ profit|floatformat:2 }}$   %
+                               id="client" name="client" type="text" value="{{ profit|floatformat:2 }}$   %
 {{ yuzde|floatformat:2 }}" style="color: red;font-weight: bold;">
                     {% elif your_value > 0 %}
-                         <input class="text-gray-600 tracking-wider pl-4  py-3 rounded-lg
+                        <input class="text-gray-600 tracking-wider pl-4  py-3 rounded-lg
                          appearance-none w-full outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-300"
-                           id="client" name="client" type="text" value="{{ profit|floatformat:2 }}$   %
+                               id="client" name="client" type="text" value="{{ profit|floatformat:2 }}$   %
 {{ yuzde|floatformat:2 }}" style="color: green;font-weight: bold;">
                     {% else %}
-                         <input class="text-gray-600 tracking-wider pl-4 py-3 rounded-lg appearance-none w-full outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-300"
-                           id="client" name="client" type="text" value="{{ profit|floatformat:2 }}$   %
+                        <input class="text-gray-600 tracking-wider pl-4 py-3 rounded-lg appearance-none w-full outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-300"
+                               id="client" name="client" type="text" value="{{ profit|floatformat:2 }}$   %
 {{ yuzde|floatformat:2 }}" style="color: green;font-weight: bold;">
                     {% endif %}
                 </div>
@@ -54,21 +54,26 @@
             <div class="flex flex-col md:w-40  text-gray-600 text-sm space-y-2 font-semibold">
                 <label for="client">Best performing stock</label>
 
-                <div class="inline-flex relative">
-                    <input class="text-gray-600 tracking-wider pl-4 pr-10 py-3 rounded-lg appearance-none w-full outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-300"
-                           id="client" name="client" type="text" value="2019/12/09">
 
-                </div>
+                    <div class="inline-flex relative">
+                        <input class="text-gray-600 tracking-wider pl-4  py-3 rounded-lg appearance-none w-full outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-300"
+                               id="client" name="client" type="text"
+                               value="{{ en_buyuk_profit.stock }}:{{ en_buyuk_profit.profit }}$">
+
+                    </div>
+
             </div>
 
             <div class="flex flex-col md:w-40  text-gray-600 text-sm space-y-2 font-semibold">
                 <label for="client">Worst performing stock</label>
 
-                <div class="inline-flex relative">
-                    <input class="text-gray-600 tracking-wider pl-4 pr-10 py-3 rounded-lg appearance-none w-full outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-300"
-                           id="client" name="client" type="text" value="2019/12/09">
+                    <div class="inline-flex relative">
+                        <input class="text-gray-600 tracking-wider pl-4  py-3 rounded-lg appearance-none w-full outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-300"
+                               id="client" name="client" type="text" value="
+{{ en_kucuk_profit.stock }}:{{ en_kucuk_profit.profit }}$">
 
-                </div>
+                    </div>
+
             </div>
 
 
