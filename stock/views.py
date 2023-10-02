@@ -59,3 +59,5 @@ def alis_satis_hesapla(Transaction):
 # Örnek kullanım:
 # hisse = Hisse.objects.get(pk=1)
 # alis_satis_hesapla(hisse)
+
+

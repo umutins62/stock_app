@@ -1,4 +1,35 @@
 {% load static %}
+<style>
+    /* Temel CSS */
+    .menu {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #f1f1f1;
+    }
+
+    .menu:hover .dropdown-content {
+        display: block;
+    }
+</style>
 <nav class="text-lg flex items-center justify-between content-center ">
     <div class=" font-semibold text-xl text-gray-800 flex space-x-4 items-center">
         <a href="#">
@@ -25,10 +56,32 @@
                       clip-rule="evenodd"></path>
             </svg>
             <div class="hidden xs:block"><span class="hidden sm:inline-block">Add</span> Stock</div>
+            <div>
+
+
+            </div>
         </a>
-        <a class href="#">
-            <img class="rounded-full w-10 h-10 border-2 border-indigo-200 hover:border-indigo-300"
-                 src="{% get_media_prefix %}avatar.jpg">
-        </a>
+        {#        <div class="profile">#}
+        {#            <a class href="login_menu">#}
+        {#                <img class="rounded-full w-10 h-10 border-2 border-indigo-200 hover:border-indigo-300"#}
+        {#                     src="{% get_media_prefix %}avatar.jpg">#}
+        {#            </a>#}
+        {##}
+        {#        </div>#}
+
+        <div class="menu">
+            <img src="{% get_media_prefix %}avatar.jpg" class="rounded-full w-10 h-10 border-2 border-indigo-200
+                hover:border-indigo-300">
+            <div class="dropdown-content">
+                <a href="#">Sekme 1</a>
+                <a href="#">Sekme 2</a>
+                <a href="#">Sekme 3</a>
+            </div>
+        </div>
+
+
     </div>
 </nav> <!-- /Nav -->
+
+
+

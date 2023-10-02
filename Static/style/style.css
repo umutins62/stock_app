@@ -1265,3 +1265,7 @@ Ensure the default browser behavior of the `hidden` attribute.
     border-color: rgb(238 242 255 / var(--tw-border-opacity));
   }
 }
+
+.profile-menu {
+  display: none;
+}
