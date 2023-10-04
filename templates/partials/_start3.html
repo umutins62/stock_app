@@ -1,0 +1,77 @@
+{% load static %}
+<style>
+    /* Temel CSS */
+    .menu {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #f1f1f1;
+    }
+
+    .menu:hover .dropdown-content {
+        display: block;
+    }
+</style>
+<nav class="text-lg flex items-center justify-between content-center ">
+    <div class=" font-semibold text-xl text-gray-800 flex space-x-4 items-center">
+        <a href="#">
+                        <span class="md:hidden">
+                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                 stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M4 6h16M4 12h16M4 18h7"></path>
+                            </svg>
+
+                        </span>
+        </a>
+
+    </div>
+
+    <div class="flex space-x-5 md:space-x-10 text-gray-500 items-center content-center text-base ">
+
+        <a class="px-4 py-2 bg-indigo-100 rounded-md flex items-center space-x-2 text-indigo-500 hover:bg-indigo-200"
+           href="#">
+            <svg class="h-5 w-5 fill-indigo-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                 fill="currentColor">
+                <path fill-rule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
+                      clip-rule="evenodd"></path>
+            </svg>
+
+            <div class="hidden xs:block"><span class="hidden sm:inline-block">Add </span> Principal</div>
+         
+        </a>
+
+        <div class="menu">
+            <img src="{% get_media_prefix %}avatar.jpg" class="rounded-full w-10 h-10 border-2 border-indigo-200
+                hover:border-indigo-300">
+            <div class="dropdown-content">
+                <a href="#">Login</a>
+                <a href="#">Register</a>
+
+            </div>
+        </div>
+
+    </div>
+</nav> <!-- /Nav -->
+
+
+

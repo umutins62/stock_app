@@ -1,4 +1,5 @@
 {% load static %}
+{% load humanize %}
 <section>
     <div class=" mt-12  rounded-xl px-5 sm:px-10  pt-8 pb-4 relative  bg-no-repeat bg-right
                 bg-contain ">
@@ -24,7 +25,7 @@
                     <input class=" text-gray-600 tracking-wider pl-4 pr-10 py-3 rounded-lg appearance-none w-full
                     outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-300"
                            id="client" name="client" type="text" value="
-{{ total_sum|floatformat:2 }}$">
+{{ total_sum|floatformat:2|intcomma }}$">
 
                 </div>
             </div>

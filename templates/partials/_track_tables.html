@@ -1,5 +1,10 @@
 {% load static %}
-
+{% load humanize %}
+<style>
+    .text-right p {
+        margin-top: 10px;
+    }
+</style>
 <!-- Invoice List Table -->
 <section class="">
     <!-- Table Header -->
@@ -8,7 +13,7 @@
         <div class="text-left">STOCK</div>
         <div class="text-center">AMOUNT</div>
         <div class="text-center ">BUY PRİCE</div>
-        <div class="text-center">PRİCE</div>
+        <div class="text-center">SELL PRİCE</div>
         <div class="text-center">TOTAL</div>
         <div class="flex-1  text-center">DATE</div>
         <div class="flex-1  text-right"></div>
@@ -19,18 +24,31 @@
 
     <!-- Table Body -->
     <div class="bg-white mt-5 rounded-xl text-sm   text-gray-500 divide-y divide-indigo-50 overflow-x-auto  shadow">
-        {% for item in transactions %}
+        {% for item in transactions_all %}
             <div class="invoice-table-row flex items-left gap-x-1 px-3 py-2">
                 <div class="text-left">{{ item.stock }}</div>
                 <div class="text-center" id="first1_{{ forloop.counter }}">{{ item.shares }}</div>
                 <div class="text-center">{{ item.buy_price|floatformat:2 }}</div>
-                <div class="text-center" id="first2_{{ forloop.counter }}">2.00</div>
+                <div class="text-center" id="first2_{{ forloop.counter }}">{{ item.sell_price|floatformat:2 }}</div>
                 <div class="text-center" id="resultDiv_{{ forloop.counter }}">0.00</div>
                 <div class="text-center">{{ item.transaction_date|date:"d-m-Y" }}</div>
+                {% if  item.sell_price != 0 %}
+                    <div class="text-right">
+                        <button type="button" class="btn  px-4 py-1 rounded-lg bg-rose-400  text-white "
+                                style="margin-left: 10px;">Sell
+                        </button>
+                    </div>
+                {% else %}
+                    <div class="text-right">
+                        <button type="button" class="btn  px-4 py-1 rounded-lg bg-green  text-white "
+                                style="margin-left: 10px;">____
+                        </button>
+                    </div>
+                {% endif %}
 
                 <div class="text-right">
-                    <button type="button" class="btn  px-4 py-1 rounded-lg bg-rose-400  text-white "
-                            style="margin-left: 10px;">Sell
+                    <button type="button" class="btn  px-4 py-1 rounded-lg bg-yellow-200  text-gray-600 "
+                            style="margin-left: 10px;">Buy
                     </button>
                 </div>
 
@@ -52,5 +70,20 @@
         {% endfor %}
 
     </div><!-- /Table Body -->
+    <div class="text-right">
+
+        <p class="text-gray-500 text-sm">
+            Total Buying: {{ total_result_buy|floatformat:2|intcomma }}
+        </p>
+
+        <p class="mt-2 text-gray-500 text-sm">
+            Total Selling: {{ total_result_sell|floatformat:2|intcomma }}
+        </p>
+
+        <p class="mt-2 text-gray-500 text-sm">
+            Profit: {{ profit|floatformat:2|intcomma }}
+        </p>
+
+    </div>
 </section>
 <!-- /Invoice List Table -->

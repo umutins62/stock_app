@@ -1,0 +1,43 @@
+{% load static %}
+
+<!-- Invoice List Table -->
+<section class="">
+    <!-- Table Header -->
+    <div class="invoice-table-row invoice-table-header bg-white mt-5 rounded-xl px-3  py-2 flex items-left gap-x-1
+    text-sm font-semibold  text-gray-600">
+        <div class="text-left">SYMBOL</div>
+        <div class="text-center">NAME</div>
+
+
+    </div><!-- /Table Header -->
+
+
+    <!-- Table Body -->
+    <div class="bg-white mt-5 rounded-xl text-sm   text-gray-500 divide-y divide-indigo-50 overflow-x-auto  shadow">
+        {% for item in stocks %}
+            <div class="invoice-table-row flex items-left gap-x-1 px-2 py-2">
+                <div class="text-left">{{ item.symbol }}</div>
+                <div class="text-center">{{ item.name }}</div>
+
+                <div class="text-right">
+                    <button type="button" class="btn  px-4 py-1 rounded-lg bg-rose-400  text-white "
+                            style="margin-left: 10px;">DELETE
+                    </button>
+                </div>
+
+
+                <div class="text-right">
+                    <button type="button" class="btn  px-4 py-1 rounded-lg bg-yellow-200  text-gray-600 "
+                            style="margin-left: 10px;">UPDATE
+                    </button>
+                </div>
+
+
+            </div>
+        {% endfor %}
+</div>
+<!-- /Table Body -->
+
+
+</section>
+<!-- /Invoice List Table -->

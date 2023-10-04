@@ -1,0 +1,62 @@
+{% load static %}
+
+<!-- Invoice List Table -->
+<section class="">
+    <!-- Table Header -->
+    <div class="invoice-table-row invoice-table-header bg-white mt-5 rounded-xl px-3  py-2 flex items-left gap-x-1
+    text-sm font-semibold  text-gray-600">
+        <div class="text-left">STOCK</div>
+        <div class="text-center">AMOUNT</div>
+        <div class="text-center ">BUY PRİCE</div>
+        <div class="text-center">PRİCE</div>
+        <div class="text-center">TOTAL</div>
+        <div class="flex-1  text-center">DATE</div>
+        <div class="flex-1  text-right"></div>
+
+
+    </div><!-- /Table Header -->
+
+
+    <!-- Table Body -->
+    <div class="bg-white mt-5 rounded-xl text-sm   text-gray-500 divide-y divide-indigo-50 overflow-x-auto  shadow">
+        {% for item in transactions %}
+            <div class="invoice-table-row flex items-left gap-x-1 px-3 py-2">
+                <div class="text-left">{{ item.stock }}</div>
+                <div class="text-center" id="first1_{{ forloop.counter }}">{{ item.shares }}</div>
+                <div class="text-center">{{ item.buy_price|floatformat:2 }}</div>
+                <div class="text-center" id="first2_{{ forloop.counter }}">2.00</div>
+                <div class="text-center" id="resultDiv_{{ forloop.counter }}">0.00</div>
+                <div class="text-center">{{ item.transaction_date|date:"d-m-Y" }}</div>
+
+                <div class="text-right">
+                    <button type="button" class="btn  px-4 py-1 rounded-lg bg-rose-400  text-white "
+                            style="margin-left: 10px;">Sell
+                    </button>
+                </div>
+
+                 <div class="text-right">
+                    <button type="button" class="btn  px-4 py-1 rounded-lg bg-yellow-200  text-gray-600 "
+                            style="margin-left: 10px;">Buy
+                    </button>
+                </div>
+
+                <script>
+                    // İlk değeri alın
+                    var firstValue = parseFloat(document.getElementById('first1_{{ forloop.counter }}').textContent);
+
+                    // İkinci değeri alın
+                    var secondValue = parseFloat(document.getElementById('first2_{{ forloop.counter }}').textContent);
+
+                    // İki değeri çarpın
+                    var result = firstValue * secondValue;
+
+                    // Sonucu yeni bir div içine yerleştirin
+                    var resultDiv = document.getElementById('resultDiv_{{ forloop.counter }}');
+                    resultDiv.textContent = result.toFixed(2); // Sonucu virgülden sonra 2 basamakla sınırlayın
+                </script>
+            </div>
+        {% endfor %}
+
+    </div><!-- /Table Body -->
+</section>
+<!-- /Invoice List Table -->

@@ -25,13 +25,10 @@ def index(request):
     total_result_buy = sum(row.buy_price * row.shares for row in transactions1)
     total_result_sell = sum(row.sell_price * row.shares for row in transactions1)
     profit = total_result_sell - total_result_buy
-    yuzde = (profit / total_result_buy)*100
+    yuzde = (profit / total_result_buy) * 100
 
     en_buyuk_profit = Transaction.objects.all().order_by('-profit').first()
     en_kucuk_profit = Transaction.objects.all().order_by('profit').first()
-
-
-
 
     context = {
         'stocks': stocks,
@@ -56,8 +53,67 @@ def alis_satis_hesapla(Transaction):
 
     return kar, zarar
 
+
 # Örnek kullanım:
 # hisse = Hisse.objects.get(pk=1)
 # alis_satis_hesapla(hisse)
 
 
+def stock_list(request):
+    stocks = Stock.objects.all()
+
+    context = {
+        'stocks': stocks,
+    }
+
+    return render(request, "stock_list.html", context=context)
+
+
+def track_list(request):
+    stocks = Stock.objects.all()
+    transactions_all = Transaction.objects.all()
+    money_transactions = MoneyTransaction.objects.all()
+    general_settings = GeneralSettings.objects.all()
+
+    transactions_buy = Transaction.objects.all()
+    transactions_sell = Transaction.objects.filter(status="1")
+
+    total_result_buy = sum(row.buy_price * row.shares for row in transactions_buy)
+    total_result_sell = sum(row.sell_price * row.shares for row in transactions_sell)
+
+    profit = total_result_sell - total_result_buy
+
+    context = {
+        'stocks': stocks,
+        'transactions_all': transactions_all,
+        'transactions_buy': transactions_buy,
+        'transactions_sell': transactions_sell,
+        'total_result_buy': total_result_buy,
+        'total_result_sell': total_result_sell,
+        'profit': profit,
+
+    }
+
+    return render(request, "track_list.html", context=context)
+
+
+def principal(request):
+
+    money_transactions = MoneyTransaction.objects.all()
+
+
+
+
+    context = {
+           'money_transactions': money_transactions,
+    }
+
+    return render(request, "principal.html", context=context)
+
+
+def settings(request):
+    return render(request, "settings.html")
+
+
+def account(request):
+    return render(request, "account.html")

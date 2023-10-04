@@ -20,6 +20,11 @@ from . import views
 
 urlpatterns = [
     path("", views.index, name="index"),
+    path("track_list/", views.track_list, name="track_list"),
+    path("stock_list/", views.stock_list, name="stock_list"),
+    path("principal/", views.principal, name="principal"),
+    path("settings/", views.settings, name="settings"),
+    path("account/", views.account, name="account"),
 
 
 ]

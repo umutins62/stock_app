@@ -1,13 +1,15 @@
 {% load static %}
 
-<aside class="bg-white w-1/5 py-10 pl-10  min-w-min   border-r border-indigo-900/20 hidden md:block ">
-    <div class=" font-bold text-2xl">Stock Tracking</div>
+<aside class="bg-white  py-10 pl-10  min-w-min   border-r border-indigo-900/20  ">
+    <div class=" font-bold text-xl">Stock Tracking</div>
+
 
     <!-- Menu -->
     <div class="mt-12 flex flex-col space-y-7 text-gray-500 font-medium">
 
 
-        <a class=" flex items-center space-x-2 py-1  font-semibold  border-r-2 border-r-indigo-700 pr-20 " href="#">
+        <a class=" flex items-center space-x-2 py-1  font-semibold  border-r-2 border-r-indigo-700 pr-20 " href="
+{% url 'index' %}">
             <svg class="h-5 w-5 stroke-indigo-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                  stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -17,36 +19,42 @@
             <span>Home</span>
         </a>
         <a class=" flex items-center space-x-2 py-1  group hover:border-r-2 hover:border-r-indigo-700 hover:font-semibold "
-           href="#">
-            <svg class="h-5 w-5 group-hover:stroke-indigo-700" xmlns="http://www.w3.org/2000/svg" fill="none"
+           href="{% url 'track_list' %}">
+            <div class="h-5 w-5 group-hover:stroke-indigo-700" xmlns="http://www.w3.org/2000/svg" fill="none"
                  viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2zM10 8.5a.5.5 0 11-1 0 .5.5 0 011 0zm5 5a.5.5 0 11-1 0 .5.5 0 011 0z"></path>
+                <i class="fa fa-shopping-basket" aria-hidden="true"></i>
 
-            </svg>
+            </div>
+            <span>Tracking List</span>
+        </a>
+
+        <a class=" flex items-center space-x-2 py-1  group hover:border-r-2 hover:border-r-indigo-700 hover:font-semibold "
+           href="{% url 'stock_list' %}">
+            <div class="h-5 w-5 group-hover:stroke-indigo-700" xmlns="http://www.w3.org/2000/svg" fill="none"
+                 viewBox="0 0 24 24" stroke="currentColor">
+                <i class="fa fa-tasks" aria-hidden="true"></i>
+            </div>
             <span>Stock List</span>
         </a>
         <a class=" flex items-center space-x-2 py-1  group hover:border-r-2 hover:border-r-indigo-700 hover:font-semibold "
-           href="#">
-            <svg class="h-5 w-5 group-hover:stroke-indigo-700" xmlns="http://www.w3.org/2000/svg" fill="none"
+           href="{% url 'principal' %}">
+            <div class="h-5 w-5 group-hover:stroke-indigo-700" xmlns="http://www.w3.org/2000/svg" fill="none"
                  viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"></path>
-            </svg>
+                <i class="fa fa-university" aria-hidden="true"></i>
+            </div>
             <span>Cash Flow</span>
         </a>
         <a class=" flex items-center space-x-2 py-1  group hover:border-r-2 hover:border-r-indigo-700 hover:font-semibold "
-           href="#">
-            <svg class="h-5 w-5 group-hover:stroke-indigo-700" xmlns="http://www.w3.org/2000/svg" fill="none"
+           href="{% url 'account' %}">
+            <div class="h-5 w-5 group-hover:stroke-indigo-700" xmlns="http://www.w3.org/2000/svg" fill="none"
                  viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                <i class="fa fa-address-book" aria-hidden="true"></i>
 
-            </svg>
+            </div>
             <span>Account</span>
         </a>
         <a class=" flex items-center space-x-2 py-1  group hover:border-r-2 hover:border-r-indigo-700 hover:font-semibold "
-           href="#">
+           href="{% url 'settings' %}">
             <svg class="h-5 w-5 group-hover:stroke-indigo-700" xmlns="http://www.w3.org/2000/svg" fill="none"
                  viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
