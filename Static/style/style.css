@@ -600,17 +600,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 8rem;
 }
 
-.min-w-min{
-  min-width: -webkit-min-content;
-  min-width: -moz-min-content;
-  min-width: min-content;
-}
 
-.max-w-max{
-  max-width: -webkit-max-content;
-  max-width: -moz-max-content;
-  max-width: max-content;
-}
 
 .flex-1{
   flex: 1 1 0%;
