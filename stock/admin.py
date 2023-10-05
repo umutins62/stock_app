@@ -41,4 +41,16 @@ class generalsettingsAdmin(admin.ModelAdmin):
     class Meta:
         model = GeneralSettings
 
+@admin.register(UserSettings)
+class usersettingsAdmin(admin.ModelAdmin):
+    list_display = ['id','user', 'name', 'value', 'image'
+
+                    ]
+    list_editable = ['user','name', 'value', 'image']
+
+    class Meta:
+        model = GeneralSettings
+
+
+
 

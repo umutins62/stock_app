@@ -1,9 +1,9 @@
 from django.db.models import Sum
-from django.forms import models
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from stock.models import Stock, Transaction, MoneyTransaction, GeneralSettings
-from openpyxl import load_workbook
-import pandas as pd
+from .forms import *
+from django.contrib import messages
+
 
 
 # Create your views here.
@@ -98,14 +98,10 @@ def track_list(request):
 
 
 def principal(request):
-
     money_transactions = MoneyTransaction.objects.all()
 
-
-
-
     context = {
-           'money_transactions': money_transactions,
+        'money_transactions': money_transactions,
     }
 
     return render(request, "principal.html", context=context)
@@ -117,3 +113,70 @@ def settings(request):
 
 def account(request):
     return render(request, "account.html")
+
+
+def add_stock(request):
+    stocks = Stock.objects.all()
+    if request.method == 'POST':
+        form = AddStockForm(request.POST or None)
+        if form.is_valid():
+            symbol = request.POST.get('symbol')
+            name = request.POST.get('name')
+            Stock.objects.create(
+                symbol=symbol,
+                name=name)
+
+            messages.success(request, 'Stock bilginiz başarıyla gönderildi.')
+            return redirect('stock_list')
+
+
+        else:
+            messages.error(request, 'Stock bilginiz kaydedilemedi.')
+
+    else:
+        form = AddStockForm()
+
+    context = {
+        'stocks': stocks,
+        "form": form,
+    }
+    return render(request, "add_stock.html", context=context)
+
+
+def delete_item(request, id):
+    item = Stock.objects.get(id=id)
+    item.delete()
+    messages.success(request, 'Stock bilginiz başarıyla silindi.')
+    return redirect('stock_list')
+
+
+def update_item(request, id):
+    stock = Stock.objects.get(id=id)
+
+    if request.method == 'POST':
+        form = AddStockForm(request.POST or None, instance=stock )
+        if form.is_valid():
+            stock.symbol = form.cleaned_data['symbol']
+            stock.name = form.cleaned_data['name']
+            stock.save()
+            messages.success(request, 'Stock güncellendi')
+            return redirect('stock_list')
+
+    else:
+        form = AddStockForm(instance=stock)
+
+    context = {
+
+        "form": form,
+        "stock": stock,
+    }
+
+    return render(request, "update_stock.html", context)
+
+
+
+
+
+
+
+

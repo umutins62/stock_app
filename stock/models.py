@@ -148,9 +148,40 @@ class GeneralSettings(models.Model):
     def __str__(self):
         return self.name
 
-
-
     class Meta:
         verbose_name = 'General Setting'
         verbose_name_plural = 'General Settings'
+        ordering = ['-name']
+
+
+class UserSettings(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE)
+    name = models.CharField(
+        verbose_name='Name',
+        default='',
+        max_length=50,
+        blank=True,
+        help_text='Please enter your name')
+    value = models.CharField(
+        verbose_name='Value',
+        default='',
+        max_length=50,
+        blank=True,
+        help_text='Please enter your value')
+    image = models.ImageField(
+        verbose_name='Image',
+        upload_to='images/',
+        blank=True,
+        null=True,
+        help_text='Please enter your image')
+
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'User Setting'
+        verbose_name_plural = 'User Settings'
         ordering = ['-name']

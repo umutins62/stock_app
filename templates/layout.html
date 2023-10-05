@@ -4,6 +4,7 @@
 {% include 'partials/_head.html' %}
 
 <body class="font-montserrat " style="font-family: 'Courier New', Courier, monospace;">
+{% include 'partials/messages.html' %}
 
 
 {% block content %}
@@ -11,7 +12,25 @@
 
 {% endblock %}
 
+<script>
 
+    function fadeOutAlert() {
+        var alert = document.getElementById("alert");
+        var opacity = 1;
+        var timer = setInterval(function () {
+            if (opacity <= 0) {
+                clearInterval(timer);
+                alert.remove();
+            }
+            alert.style.opacity = opacity;
+            opacity -= 0.05;
+        }, 50);
+    }
+
+    window.onload = function () {
+        fadeOutAlert();
+    }
+</script>
 </body>
 
 </html>
