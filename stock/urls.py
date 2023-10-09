@@ -28,6 +28,6 @@ urlpatterns = [
     path("add_stock/", views.add_stock, name="add_stock"),
     path("delete_item/<int:id>", views.delete_item, name="delete_item"),
     path('update/<int:id>/', views.update_item, name='update_item'),
-    # path("add_principal/", views.add_principal, name="add_principal"),
+
 
 ]
