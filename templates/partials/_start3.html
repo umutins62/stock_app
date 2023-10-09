@@ -61,12 +61,29 @@
         </a>
 
        <div class="menu">
-            <img src="{% get_media_prefix %}avatar.jpg" class="rounded-full w-10 h-10 border-2 border-indigo-200
-                hover:border-indigo-300">
+             {% if user.is_authenticated %}
+                    <a class="px-4 py-2 bg-indigo-100 rounded-md flex items-center space-x-2 text-indigo-500 hover:bg-indigo-200"
+                       href="#">
+
+                        <div class="hidden xs:block"><span class="hidden sm:inline-block">{{ fullname }}
+                    </span></div>
+
+                    </a>
+
+                {% else %}
+                    <a class="px-4 py-2 bg-indigo-100 rounded-md flex items-center space-x-2 text-indigo-500 hover:bg-indigo-200"
+                       href="#">
+
+                        <div class="hidden xs:block"><span class="hidden sm:inline-block">Login
+                    </span></div>
+
+                    </a>
+
+                {% endif %}
             <div class="dropdown-content">
                 {% if user.is_authenticated %}
                     <a href="{% url 'user_logout' %}">logout</a>
-                    <a href="#">Account</a>
+                    <a href="{% url 'account' %}">Account</a>
                 {% else %}
                     <a href="{% url 'user_login' %}">Login</a>
                     <a href="{% url 'register' %}">Register</a>

@@ -9,8 +9,8 @@ def user_login(request):
         return redirect("index")
 
     if request.method == "POST":
-        username = request.POST.get("username")
-        password = request.POST.get("password")
+        username = request.POST["username"]
+        password = request.POST["password"]
 
         user = authenticate(request, username=username, password=password)
         if user is not None:
@@ -24,7 +24,7 @@ def user_login(request):
 
 def user_logout(request):
     logout(request)
-    return render(request, "account/register.html")
+    return redirect("user_login")
 
 
 def register(request):
@@ -47,6 +47,8 @@ def register(request):
                     user = User.objects.create_user(username=username, email=email, password=password)
                     user.save()
                     return redirect("user_login")
+        else:
+            return render(request, "account/register.html", {"error": "Şifreler eşleşmiyor."})
 
     else:
         return render(request, "account/register.html")

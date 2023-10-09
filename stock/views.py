@@ -5,11 +5,11 @@ from .forms import *
 from django.contrib import messages
 
 
-
 # Create your views here.
 def index(request):
     if request.user.is_authenticated:
         stocks = Stock.objects.all()
+        fullname = request.user.get_full_name()
 
         transactions = Transaction.objects.filter(status="0")
         transactions1 = Transaction.objects.filter(status="1")
@@ -42,7 +42,7 @@ def index(request):
             'yuzde': yuzde,
             'en_buyuk_profit': en_buyuk_profit,
             'en_kucuk_profit': en_kucuk_profit,
-            'user': request.user,
+            'fullname': fullname,
 
         }
 
@@ -64,10 +64,12 @@ def alis_satis_hesapla(Transaction):
 
 
 def stock_list(request):
+    fullname = request.user.get_full_name()
     stocks = Stock.objects.all()
 
     context = {
         'stocks': stocks,
+        'fullname': fullname,
     }
 
     return render(request, "stock_list.html", context=context)
@@ -75,6 +77,7 @@ def stock_list(request):
 
 def track_list(request):
     stocks = Stock.objects.all()
+    fullname = request.user.get_full_name()
     transactions_all = Transaction.objects.all()
     money_transactions = MoneyTransaction.objects.all()
     general_settings = GeneralSettings.objects.all()
@@ -95,6 +98,7 @@ def track_list(request):
         'total_result_buy': total_result_buy,
         'total_result_sell': total_result_sell,
         'profit': profit,
+        'fullname': fullname,
 
     }
 
@@ -102,9 +106,11 @@ def track_list(request):
 
 
 def principal(request):
+    fullname = request.user.get_full_name()
     money_transactions = MoneyTransaction.objects.all()
 
     context = {
+        'fullname': fullname,
         'money_transactions': money_transactions,
     }
 
@@ -116,10 +122,18 @@ def settings(request):
 
 
 def account(request):
-    return render(request, "account.html")
+
+    fullname = request.user.get_full_name()
+
+    context = {
+
+        'fullname': fullname,
+    }
+    return render(request, "account.html", context=context)
 
 
 def add_stock(request):
+    fullname = request.user.get_full_name()
     stocks = Stock.objects.all()
     if request.method == 'POST':
         form = AddStockForm(request.POST or None)
@@ -141,6 +155,7 @@ def add_stock(request):
         form = AddStockForm()
 
     context = {
+        'fullname': fullname,
         'stocks': stocks,
         "form": form,
     }
@@ -155,10 +170,11 @@ def delete_item(request, id):
 
 
 def update_item(request, id):
+    fullname = request.user.get_full_name()
     stock = Stock.objects.get(id=id)
 
     if request.method == 'POST':
-        form = AddStockForm(request.POST or None, instance=stock )
+        form = AddStockForm(request.POST or None, instance=stock)
         if form.is_valid():
             stock.symbol = form.cleaned_data['symbol']
             stock.name = form.cleaned_data['name']
@@ -170,13 +186,13 @@ def update_item(request, id):
         form = AddStockForm(instance=stock)
 
     context = {
+        'fullname': fullname,
 
         "form": form,
         "stock": stock,
     }
 
     return render(request, "update_stock.html", context)
-
 
 # def add_principal(request):
 #     principal = MoneyTransaction.objects.all()

@@ -12,17 +12,20 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css"
         rel="stylesheet"
 />
+<div class="mb-10">
+
+    <h1>Register</h1>
+</div>
 <div class="container mt-12">
     <form method="post">
         {% csrf_token %}
 
         <div>
             {% if error %}
-                <div class="alert alert-danger" role="alert">
+                <div class="alert alert-danger">
                 {{ error }}
-            {% endif %}
-
             </div>
+               {% endif %}
 
             <div>
                 <div class="col">
