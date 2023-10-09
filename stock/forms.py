@@ -8,8 +8,12 @@ from stock.models import *
 
 
 class AddStockForm(ModelForm):
-  class Meta:
-    model = Stock
-    fields = ['symbol', 'name']
+    class Meta:
+        model = Stock
+        fields = ['symbol', 'name']
 
 
+# class AddPrincipalForm(ModelForm):
+#     class Meta:
+#         model = MoneyTransaction
+#         fields = ['user', 'amount', 'transaction_type']

@@ -52,12 +52,17 @@
             <a href="{% url 'stock_list' %}" style="color: #e5e7eb">Return</a>
         </button>
 
-        <div class="menu">
+       <div class="menu">
             <img src="{% get_media_prefix %}avatar.jpg" class="rounded-full w-10 h-10 border-2 border-indigo-200
                 hover:border-indigo-300">
             <div class="dropdown-content">
-                <a href="#">Login</a>
-                <a href="#">Register</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'user_logout' %}">logout</a>
+                    <a href="#">Account</a>
+                {% else %}
+                    <a href="{% url 'user_login' %}">Login</a>
+                    <a href="{% url 'register' %}">Register</a>
+                {% endif %}
 
             </div>
         </div>
