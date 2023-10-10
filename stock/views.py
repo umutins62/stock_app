@@ -13,10 +13,10 @@ def index(request):
         stocks = Stock.objects.all()
         fullname = request.user.get_full_name()
 
-        transactions = Transaction.objects.filter(status="0")
-        transactions1 = Transaction.objects.filter(status="1")
+        transactions = Transaction.objects.filter(user=request.user).filter(status="0")
+        transactions1 = Transaction.objects.filter(user=request.user).filter(status="1")
 
-        money_transactions = MoneyTransaction.objects.all()
+        money_transactions = MoneyTransaction.objects.filter(user=request.user)
         general_settings = GeneralSettings.objects.all()
 
         # image
@@ -24,14 +24,14 @@ def index(request):
 
         # total money
 
-        total_sum = MoneyTransaction.objects.aggregate(total_sum=Sum('amount'))['total_sum']
+        total_sum = MoneyTransaction.objects.filter(user=request.user).aggregate(total_sum=Sum('amount'))['total_sum']
         total_result_buy = sum(row.buy_price * row.shares for row in transactions1)
         total_result_sell = sum(row.sell_price * row.shares for row in transactions1)
         profit = total_result_sell - total_result_buy
         yuzde = (profit / total_result_buy) * 100
 
-        en_buyuk_profit = Transaction.objects.all().order_by('-profit').first()
-        en_kucuk_profit = Transaction.objects.all().order_by('profit').first()
+        en_buyuk_profit = Transaction.objects.filter(user=request.user).order_by('-profit').first()
+        en_kucuk_profit = Transaction.objects.filter(user=request.user).order_by('profit').first()
 
         context = {
             'stocks': stocks,
@@ -80,12 +80,10 @@ def stock_list(request):
 def track_list(request):
     stocks = Stock.objects.all()
     fullname = request.user.get_full_name()
-    transactions_all = Transaction.objects.all()
-    money_transactions = MoneyTransaction.objects.all()
-    general_settings = GeneralSettings.objects.all()
+    transactions_all = Transaction.objects.filter(user=request.user)
 
-    transactions_buy = Transaction.objects.all()
-    transactions_sell = Transaction.objects.filter(status="1")
+    transactions_buy = Transaction.objects.filter(user=request.user)
+    transactions_sell = Transaction.objects.filter(user=request.user).filter(status="1")
 
     total_result_buy = sum(row.buy_price * row.shares for row in transactions_buy)
     total_result_sell = sum(row.sell_price * row.shares for row in transactions_sell)
@@ -109,7 +107,7 @@ def track_list(request):
 
 def principal(request):
     fullname = request.user.get_full_name()
-    money_transactions = MoneyTransaction.objects.all()
+    money_transactions = MoneyTransaction.objects.filter(user=request.user)
 
     context = {
         'fullname': fullname,

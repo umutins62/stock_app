@@ -23,13 +23,7 @@
             <span>Tracking List</span>
         </a>
 
-        <a class=" flex items-center space-x-2 py-1  group hover:border-r-2 hover:border-r-indigo-700 hover:font-semibold "
-           href="{% url 'stock_list' %}">
-            <div class="h-5 w-5 group-hover:stroke-indigo-700" xmlns="http://www.w3.org/2000/svg" fill="none"
-                 viewBox="0 0 24 24" stroke="currentColor">
-                <i class="fa fa-tasks" aria-hidden="true"></i>
-            </div>
-            <span>Stock List</span>
+
         </a>
         <a class=" flex items-center space-x-2 py-1  group hover:border-r-2 hover:border-r-indigo-700 hover:font-semibold "
            href="{% url 'principal' %}">
@@ -39,32 +33,41 @@
             </div>
             <span>Cash Flow</span>
         </a>
-        <a class=" flex items-center space-x-2 py-1  group hover:border-r-2 hover:border-r-indigo-700 hover:font-semibold "
-           href="{% url 'account' %}">
-            <div class="h-5 w-5 group-hover:stroke-indigo-700" xmlns="http://www.w3.org/2000/svg" fill="none"
-                 viewBox="0 0 24 24" stroke="currentColor">
-                <i class="fa fa-address-book" aria-hidden="true"></i>
-
-            </div>
-            <span>Account</span>
-        </a>
 
         <a class=" flex items-center space-x-2 py-1  group hover:border-r-2 hover:border-r-indigo-700 hover:font-semibold "
-           href="{% url 'change_pass' %}">
+           href="{% url 'stock_list' %}">
             <div class="h-5 w-5 group-hover:stroke-indigo-700" xmlns="http://www.w3.org/2000/svg" fill="none"
                  viewBox="0 0 24 24" stroke="currentColor">
-                <i class="fa-solid fa-key"></i>
-
+                <i class="fa fa-tasks" aria-hidden="true"></i>
             </div>
-            <span>Change Password</span>
-        </a>
+            <span>Stock List</span>
 
-        <div>
-            <i class="fa-solid fa-gears"></i>
-            <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Settings
-            </button>
-        </div>
+            <a class=" flex items-center space-x-2 py-1  group hover:border-r-2 hover:border-r-indigo-700 hover:font-semibold "
+               href="{% url 'account' %}">
+                <div class="h-5 w-5 group-hover:stroke-indigo-700" xmlns="http://www.w3.org/2000/svg" fill="none"
+                     viewBox="0 0 24 24" stroke="currentColor">
+                    <i class="fa fa-address-book" aria-hidden="true"></i>
+
+                </div>
+                <span>Account</span>
+            </a>
+
+            <a class=" flex items-center space-x-2 py-1  group hover:border-r-2 hover:border-r-indigo-700 hover:font-semibold "
+               href="{% url 'change_pass' %}">
+                <div class="h-5 w-5 group-hover:stroke-indigo-700" xmlns="http://www.w3.org/2000/svg" fill="none"
+                     viewBox="0 0 24 24" stroke="currentColor">
+                    <i class="fa-solid fa-key"></i>
+
+                </div>
+                <span>Change Password</span>
+            </a>
+
+            <div>
+                <i class="fa-solid fa-gears"></i>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Settings
+                </button>
+            </div>
 
 
     </div><!-- /Menu -->

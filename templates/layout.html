@@ -2,6 +2,9 @@
 <!DOCTYPE html>
 <html lang="en">
 {% include 'partials/_head.html' %}
+{% block css %}
+
+{% endblock %}
 
 <body class="font-montserrat " style="font-family: 'Courier New', Courier, monospace;">
 {% include 'partials/messages.html' %}
@@ -12,7 +15,12 @@
 
 {% endblock %}
 
+{% block scripts %}
+
+{% endblock %}
+
 <script>
+
 
     function fadeOutAlert() {
         var alert = document.getElementById("alert");
@@ -31,6 +39,8 @@
         fadeOutAlert();
     }
 </script>
+
+
 </body>
 
 </html>
