@@ -122,33 +122,20 @@ def settings(request):
 
 
 def account(request):
-    firstname = request.user.first_name
-    lastname = request.user.last_name
-    email = request.user.email
-    username = request.user.username
-
     fullname = request.user.get_full_name()
+    if request.method == 'POST':
+        form = UserForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('account')
+    else:
+        form = UserForm(instance=request.user)
 
-    context = {
-        'firstname': firstname,
-        'lastname': lastname,
-        'email': email,
-        'username': username,
+    context={
+        'form':form,
         'fullname': fullname,
     }
-
-    if request.method == "POST":
-        first_name = request.POST["first_name"]
-        last_name = request.POST["last_name"]
-        username = request.POST["username"]
-        email = request.POST["email"]
-
-
-        user = User.objects.create_user(username=username, email=email, first_name=first_name,last_name=last_name)
-        user.save()
-        return redirect("account")
-
-    return render(request, "account.html", context=context)
+    return render(request, 'account.html', context=context)
 
 
 def add_stock(request):

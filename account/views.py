@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
 
+
 # Create your views here.
 def user_login(request):
     if request.user.is_authenticated:
@@ -52,3 +53,5 @@ def register(request):
 
     else:
         return render(request, "account/register.html")
+
+

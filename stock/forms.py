@@ -1,10 +1,8 @@
-from django import forms
-from django.core.mail import send_mail, EmailMessage
 
-from djangoStockApp import settings
 from django.forms import ModelForm
+from django.contrib.auth.models import User
 
-from stock.models import *
+from stock.models import Stock
 
 
 class AddStockForm(ModelForm):
@@ -13,7 +11,10 @@ class AddStockForm(ModelForm):
         fields = ['symbol', 'name']
 
 
-# class AddPrincipalForm(ModelForm):
-#     class Meta:
-#         model = MoneyTransaction
-#         fields = ['user', 'amount', 'transaction_type']
+class UserForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name','last_name','username', 'email']
+
+
+

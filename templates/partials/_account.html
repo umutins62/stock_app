@@ -1,4 +1,5 @@
 {% load static %}
+<!-- Font Awesome -->
 <link
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
         rel="stylesheet"
@@ -13,59 +14,19 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css"
         rel="stylesheet"
 />
+
 <div class="mb-10">
 
     <h1>Account</h1>
 </div>
-<form method="post">
+<form method="POST" class="form-horizontal mt-12">
     {% csrf_token %}
-  <!-- 2 column grid layout with text inputs for the first and last names -->
-  <div class="row mb-4">
-    <div class="col">
-      <div class="">
-        <input type="text" id="form6Example1" class="form-control" name="first-name" value="{{ firstname }}"/>
-        <label class="form-label" for="form6Example1">First Name</label>
-      </div>
-    </div>
-    <div class="col">
-      <div class="">
-        <input type="text" id="form6Example2" class="form-control" name="last-name" value="{{ lastname }}" />
-        <label class="form-label" for="form6Example2">Last name</label>
-      </div>
-    </div>
-  </div>
+    {{ form.as_p }}
 
-  <!-- Text input -->
-  <div class=" mb-4">
-    <input type="text" id="form6Example3" class="form-control" name="username" value="{{ username }}" />
-    <label class="form-label" for="form6Example3">Username</label>
-  </div>
-
-     <!-- Email input -->
-  <div class=" mb-4">
-    <input type="email" id="form6Example5" class="form-control"  name="email" value="{{ email }}" />
-    <label class="form-label" for="form6Example5">Email</label>
-  </div>
-
-
-  <!-- Submit button -->
-
-     <div class="row mb-4">
-    <div class="col">
-      <div class="">
-        <button type="submit" class="btn btn-primary btn-block mb-4">Update</button>
-      </div>
-    </div>
-    <div class="col">
-      <div class="">
-        <button type="button" class="btn
-   btn-primary btn-block mb-4">Change Password</button>
-      </div>
-    </div>
-  </div>
-
+    <input class="btn btn-primary" type="submit" value="Update">
 
 </form>
-    <script>
-        src = "https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"
-    </script>
+
+<script>
+    src = "https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"
+</script>
