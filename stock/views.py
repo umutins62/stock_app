@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from stock.models import Stock, Transaction, MoneyTransaction, GeneralSettings
 from .forms import *
 from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
+
 
 
 # Create your views here.
@@ -117,8 +119,12 @@ def principal(request):
     return render(request, "principal.html", context=context)
 
 
-def settings(request):
-    return render(request, "settings.html")
+# def settings(request):
+#     context = {
+#         # buraya ayarlarınızı ekleyin
+#     }
+#     return render(request, 'partials/_settings.html', context)
+
 
 
 def account(request):
@@ -131,8 +137,8 @@ def account(request):
     else:
         form = UserForm(instance=request.user)
 
-    context={
-        'form':form,
+    context = {
+        'form': form,
         'fullname': fullname,
     }
     return render(request, 'account.html', context=context)
@@ -200,35 +206,27 @@ def update_item(request, id):
 
     return render(request, "update_stock.html", context)
 
-# def add_principal(request):
-#     principal = MoneyTransaction.objects.all()
-#     if request.method == 'POST':
-#         form = AddPrincipalForm(request.POST or None)
-#         if form.is_valid():
-#             user = request.POST.get('user')
-#             amount = request.POST.get('amount')
-#             transaction_type = request.POST.get('transaction_type')
-#             transaction_date = request.POST.get('transaction_date')
-#             principal.objects.create(
-#                 user=user,
-#                 amount=amount,
-#                 transaction_type=transaction_type,
-#                 transaction_date=transaction_date,
-#
-#                 )
-#
-#             messages.success(request, 'Principal bilginiz başarıyla gönderildi.')
-#             return redirect('principal')
-#
-#
-#         else:
-#             messages.error(request, 'Principal bilginiz kaydedilemedi.')
-#
-#     else:
-#         form = AddPrincipalForm()
-#
-#     context = {
-#         'principal': principal,
-#         "form": form,
-#     }
-#     return render(request, "add_principal.html", context=context)
+
+# views.py
+
+
+from django.contrib.auth.forms import PasswordChangeForm
+
+
+def change_password(request):
+    fullname = request.user.get_full_name()
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Şifre başarıyla güncellendi!')
+            return redirect('account')
+    else:
+        form = PasswordChangeForm(request.user)
+
+    context = {
+        'form': form,
+        'fullname': fullname,
+    }
+    return render(request, 'change_pass.html', context)
