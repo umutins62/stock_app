@@ -6,7 +6,7 @@
     }
 </style>
 <!-- Invoice List Table -->
-<section >
+<section>
     <!-- Table Header -->
     <div class="invoice-table-row invoice-table-header bg-white mt-12  rounded-xl px-3  py-2 flex items-left gap-x-1
 
@@ -16,6 +16,7 @@
         <div class="text-center ">BUY PRİCE</div>
         <div class="text-center">SELL PRİCE</div>
         <div class="text-center">TOTAL</div>
+        <div class="text-center">STATUS</div>
         <div class="flex-1  text-center">DATE</div>
         <div class="flex-1  text-right"></div>
 
@@ -32,12 +33,16 @@
                 <div class="text-center">{{ item.buy_price|floatformat:2 }}</div>
                 <div class="text-center" id="first2_{{ forloop.counter }}">{{ item.sell_price|floatformat:2 }}</div>
                 <div class="text-center" id="resultDiv_{{ forloop.counter }}">0.00</div>
+                <div class="text-center" id="resultDiv_{{ forloop.counter }}">{{ item.status }}</div>
                 <div class="text-center">{{ item.transaction_date|date:"d-m-Y" }}</div>
-                {% if  item.sell_price != 0 %}
+
+                {% if  item.sell_price == 0 %}
                     <div class="text-right">
-                        <button type="button" class="btn  px-4 py-1 rounded-lg bg-rose-400  text-white "
-                                style="margin-left: 10px;">Sell
-                        </button>
+                        <a href="{% url 'update_track' item.id %}">
+                            <button type="button" class="btn  px-4 py-1 rounded-lg bg-rose-400  text-white "
+                                    style="margin-left: 10px;">Sell
+                            </button>
+                        </a>
                     </div>
                 {% else %}
                     <div class="text-right">

@@ -6,7 +6,6 @@ from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 
 
-
 # Create your views here.
 def index(request):
     if request.user.is_authenticated:
@@ -124,13 +123,12 @@ def principal(request):
 #     return render(request, 'partials/_settings.html', context)
 
 
-
 def account(request):
     fullname = request.user.get_full_name()
     if request.method == 'POST':
         form = UserForm(request.POST, instance=request.user)
         if form.is_valid():
-            form.save()
+            form.save(commit=False)
             return redirect('account')
     else:
         form = UserForm(instance=request.user)
@@ -228,3 +226,69 @@ def change_password(request):
         'fullname': fullname,
     }
     return render(request, 'change_pass.html', context)
+
+
+def add_transaction(request):
+    fullname = request.user.get_full_name()
+    form = TransactionForm(request.user)
+    if request.method == 'POST':
+        form = TransactionForm(request.user, request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('track_list')
+
+    context = {'form': form,
+               'fullname': fullname, }
+    return render(request, 'add_tracking.html', context)
+
+
+def add_money(request):
+    fullname = request.user.get_full_name()
+    form = MoneytransactionForm(request.user)
+    if request.method == 'POST':
+        form = MoneytransactionForm(request.user, request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('principal')
+
+    context = {'form': form,
+               'fullname': fullname, }
+    return render(request, 'add_principal.html', context=context)
+
+
+def update_money(request):
+
+    fullname = request.user.get_full_name()
+    if request.method == 'POST':
+        form = MoneytransactionForm(request.user,request.POST, instance=request.user.moneytransaction_set.first())
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'İşlem başarıyla güncellendi')
+            return redirect('principal')
+    else:
+        form = MoneytransactionForm(request.user,instance=request.user.moneytransaction_set.first())
+
+    context = {
+        'form': form,
+        'fullname': fullname,
+    }
+    return render(request, 'update_principal.html', context=context)
+
+
+def update_track(request,id):
+    stock=Transaction.objects.get(id=id)
+    fullname = request.user.get_full_name()
+    if request.method == 'POST':
+        form = UpdatetrackingForm(request.user, request.POST, instance=stock)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'İşlem başarıyla güncellendi')
+            return redirect('track_list')
+    else:
+        form = UpdatetrackingForm(request.user, instance=stock)
+
+    context = {
+        'form': form,
+        'fullname': fullname,
+    }
+    return render(request, 'update_track.html', context=context)

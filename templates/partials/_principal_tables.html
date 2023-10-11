@@ -22,9 +22,13 @@
                 <div class="text-center">{{ item.transaction_date|date:"d-m-Y"  }}</div>
 
                 <div class="text-right">
-                    <button type="button" class="btn  px-4 py-1 rounded-lg bg-yellow-200  text-gray-600 "
+                    <a href="{% url 'update_money' %}">
+                        <button type="button" class="btn  px-4 py-1 rounded-lg bg-yellow-200  text-gray-600 "
                             style="margin-left: 10px;">UPDATE
                     </button>
+
+                    </a>
+
                 </div>
 
 
