@@ -32,5 +32,6 @@ urlpatterns = [
     path('add_money/', views.add_money, name='add_money'),
     path('update_money/', views.update_money, name='update_money'),
     path('update_track/<int:id>/', views.update_track, name='update_track'),
+    path('update_price/<int:id>/', views.update_price, name='update_price'),
 
 ]

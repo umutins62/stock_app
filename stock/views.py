@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
 from django.shortcuts import render, redirect, get_object_or_404
 from stock.models import Stock, Transaction, MoneyTransaction, GeneralSettings
@@ -15,8 +16,10 @@ def index(request):
         transactions = Transaction.objects.filter(user=request.user).filter(status="0")
         transactions1 = Transaction.objects.filter(user=request.user).filter(status="1")
 
-        money_transactions_w = MoneyTransaction.objects.filter(user=request.user).filter(transaction_type__iexact="Withraw")
-        money_transactions_d = MoneyTransaction.objects.filter(user=request.user).filter(transaction_type__iexact="Deposit")
+        money_transactions_w = MoneyTransaction.objects.filter(user=request.user).filter(
+            transaction_type__iexact="Withraw")
+        money_transactions_d = MoneyTransaction.objects.filter(user=request.user).filter(
+            transaction_type__iexact="Deposit")
 
         deposit_total = sum([d.amount for d in money_transactions_d])
         withdraw_total = sum([w.amount for w in money_transactions_w])
@@ -30,11 +33,10 @@ def index(request):
 
         # total money
 
-
         total_result_buy = sum(row.buy_price * row.shares for row in transactions1)
         total_result_sell = sum(row.sell_price * row.shares for row in transactions1)
         profit = total_result_sell - total_result_buy
-        try:    # try except bloğu eklendi
+        try:  # try except bloğu eklendi
             yuzde = (profit / total_result_buy) * 100
         except ZeroDivisionError:
             yuzde = 0
@@ -267,16 +269,15 @@ def add_money(request):
 
 
 def update_money(request):
-
     fullname = request.user.get_full_name()
     if request.method == 'POST':
-        form = MoneytransactionForm(request.user,request.POST, instance=request.user.moneytransaction_set.first())
+        form = MoneytransactionForm(request.user, request.POST, instance=request.user.moneytransaction_set.first())
         if form.is_valid():
             form.save()
             messages.success(request, 'İşlem başarıyla güncellendi')
             return redirect('principal')
     else:
-        form = MoneytransactionForm(request.user,instance=request.user.moneytransaction_set.first())
+        form = MoneytransactionForm(request.user, instance=request.user.moneytransaction_set.first())
 
     context = {
         'form': form,
@@ -285,8 +286,8 @@ def update_money(request):
     return render(request, 'update_principal.html', context=context)
 
 
-def update_track(request,id):
-    stock=Transaction.objects.get(id=id)
+def update_track(request, id):
+    stock = Transaction.objects.get(id=id)
     fullname = request.user.get_full_name()
     if request.method == 'POST':
         form = UpdatetrackingForm(request.user, request.POST, instance=stock)
@@ -302,3 +303,34 @@ def update_track(request,id):
         'fullname': fullname,
     }
     return render(request, 'update_track.html', context=context)
+
+
+@login_required
+def update_price(request, id):
+    fullname = request.user.get_full_name()
+    transaction = get_object_or_404(Transaction, id=id, user=request.user)
+
+    if request.method == 'POST':
+        form = UpdateTransactionForm(request.user,request.POST, instance=transaction)
+        if form.is_valid():
+            new_shares = form.cleaned_data['new_shares']
+            new_buy_price = form.cleaned_data['new_buy_price']
+
+            # Hesaplama yap ve güncelle
+            total_shares = transaction.shares + new_shares
+            new_avg_price = ((transaction.buy_price * transaction.shares) + (new_buy_price * new_shares)) / total_shares
+
+            # Veritabanını güncelle
+            transaction.shares = total_shares
+            transaction.buy_price = new_avg_price
+            transaction.save()
+
+            return redirect('track_list')  # İsteğe bağlı: Başarılı güncelleme sayfasına yönlendirme
+
+    else:
+        form = UpdateTransactionForm(request.user,instance=transaction)
+
+    return render(request, 'buy_track.html', {
+        'form': form,
+        'fullname': fullname,
+    })

@@ -29,15 +29,19 @@
                 <div class="text-center">{{ item.transaction_date|date:"d-m-Y" }}</div>
 
                 <div class="text-right">
-                    <button type="button" class="btn  px-4 py-1 rounded-lg bg-rose-400  text-white "
-                            style="margin-left: 10px;">Sell
-                    </button>
+                    <a href="{% url 'update_track' item.id %}">
+                        <button type="button" class="btn  px-4 py-1 rounded-lg bg-rose-400  text-white "
+                                style="margin-left: 10px;">Sell
+                        </button>
+                    </a>
                 </div>
 
-                 <div class="text-right">
-                    <button type="button" class="btn  px-4 py-1 rounded-lg bg-yellow-200  text-gray-600 "
-                            style="margin-left: 10px;">Buy
-                    </button>
+                <div class="text-right">
+                    <a href="{% url 'update_price' item.id %}">
+                        <button type="button" class="btn  px-4 py-1 rounded-lg bg-yellow-200  text-gray-600 "
+                                style="margin-left: 10px;">Buy
+                        </button>
+                    </a>
                 </div>
 
                 <script>

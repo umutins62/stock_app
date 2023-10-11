@@ -1,0 +1,7 @@
+{% load static %}
+
+<form method="POST" class="form-horizontal">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input class="btn btn-primary mt-5" type="submit" value="Update">
+</form>

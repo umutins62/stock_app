@@ -1,7 +1,7 @@
 
 from django.forms import ModelForm
 from django.contrib.auth.models import User
-
+from django import forms
 from stock.models import Stock,Transaction,MoneyTransaction
 
 
@@ -21,7 +21,8 @@ class TransactionForm(ModelForm):
     class Meta:
         model = Transaction
         fields = ['user','stock', 'buy_price', 'sell_price',
-                  'shares']
+                  'shares','status'
+                  ]
 
     def __init__(self, user, *args, **kwargs):
         super(TransactionForm, self).__init__(*args, **kwargs)
@@ -47,4 +48,20 @@ class UpdatetrackingForm(ModelForm):
 
     def __init__(self, user, *args, **kwargs):
         super(UpdatetrackingForm, self).__init__(*args, **kwargs)
+        self.fields['user'].queryset = User.objects.filter(pk=user.id)
+
+
+
+
+class UpdateTransactionForm(forms.ModelForm):
+    class Meta:
+        model = Transaction
+        fields = ['user','buy_price','shares']
+
+    new_shares = forms.IntegerField(label='New Shares')
+    new_buy_price = forms.DecimalField(label='New Buy Price', max_digits=10, decimal_places=2)
+
+
+    def __init__(self, user, *args, **kwargs):
+        super(UpdateTransactionForm, self).__init__(*args, **kwargs)
         self.fields['user'].queryset = User.objects.filter(pk=user.id)
