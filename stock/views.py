@@ -15,7 +15,14 @@ def index(request):
         transactions = Transaction.objects.filter(user=request.user).filter(status="0")
         transactions1 = Transaction.objects.filter(user=request.user).filter(status="1")
 
-        money_transactions = MoneyTransaction.objects.filter(user=request.user)
+        money_transactions_w = MoneyTransaction.objects.filter(user=request.user).filter(transaction_type__iexact="Withraw")
+        money_transactions_d = MoneyTransaction.objects.filter(user=request.user).filter(transaction_type__iexact="Deposit")
+
+        deposit_total = sum([d.amount for d in money_transactions_d])
+        withdraw_total = sum([w.amount for w in money_transactions_w])
+
+        money_transactions = deposit_total - withdraw_total
+
         general_settings = GeneralSettings.objects.all()
 
         # image
@@ -23,11 +30,14 @@ def index(request):
 
         # total money
 
-        total_sum = MoneyTransaction.objects.filter(user=request.user).aggregate(total_sum=Sum('amount'))['total_sum']
+
         total_result_buy = sum(row.buy_price * row.shares for row in transactions1)
         total_result_sell = sum(row.sell_price * row.shares for row in transactions1)
         profit = total_result_sell - total_result_buy
-        yuzde = (profit / total_result_buy) * 100
+        try:    # try except bloğu eklendi
+            yuzde = (profit / total_result_buy) * 100
+        except ZeroDivisionError:
+            yuzde = 0
 
         en_buyuk_profit = Transaction.objects.filter(user=request.user).order_by('-profit').first()
         en_kucuk_profit = Transaction.objects.filter(user=request.user).order_by('profit').first()
@@ -38,7 +48,7 @@ def index(request):
             'money_transactions': money_transactions,
             'general_settings': general_settings,
             'image': image,
-            'total_sum': total_sum,
+            'total_sum': money_transactions,
             'profit': profit,
             'yuzde': yuzde,
             'en_buyuk_profit': en_buyuk_profit,
