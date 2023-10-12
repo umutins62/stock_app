@@ -1,6 +1,8 @@
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.db.models import Sum
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, reverse
 from stock.models import Stock, Transaction, MoneyTransaction, GeneralSettings
 from .forms import *
 from django.contrib import messages
@@ -311,7 +313,7 @@ def update_price(request, id):
     transaction = get_object_or_404(Transaction, id=id, user=request.user)
 
     if request.method == 'POST':
-        form = UpdateTransactionForm(request.user,request.POST, instance=transaction)
+        form = UpdateTransactionForm(request.user, request.POST, instance=transaction)
         if form.is_valid():
             new_shares = form.cleaned_data['new_shares']
             new_buy_price = form.cleaned_data['new_buy_price']
@@ -328,9 +330,17 @@ def update_price(request, id):
             return redirect('track_list')  # İsteğe bağlı: Başarılı güncelleme sayfasına yönlendirme
 
     else:
-        form = UpdateTransactionForm(request.user,instance=transaction)
+        form = UpdateTransactionForm(request.user, instance=transaction)
 
     return render(request, 'buy_track.html', {
         'form': form,
         'fullname': fullname,
     })
+
+
+@staff_member_required()
+def special_admin(request):
+    if request.user.is_superuser:
+        return redirect('admin:index')
+    else:
+        raise PermissionDenied
