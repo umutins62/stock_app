@@ -7,71 +7,63 @@
 </style>
 <!-- Invoice List Table -->
 <section>
-    <!-- Table Header -->
-    <div class="invoice-table-row invoice-table-header bg-white mt-12  rounded-xl px-3  py-2 flex items-left gap-x-1
 
-    text-sm font-semibold  text-gray-600">
-        <div class="text-left">STOCK</div>
-        <div class="text-center">AMOUNT</div>
-        <div class="text-center ">BUY PRİCE</div>
-        <div class="text-center">SELL PRİCE</div>
-        <div class="text-center">TOTAL</div>
-{#        <div class="flex-1  text-center">DATE</div>#}
-        <div class="flex-1  text-right"></div>
+    <div class="text-right mb-3 mx-3">
+        <a href="{% url 'add_track' %}">
+            <button type="button" class="btn btn-outline-primary">Add</button>
+        </a>
+    </div>
 
 
-    </div><!-- /Table Header -->
+    <div class="sim__col__body p-lr1">
+        <div class="sim__table">
+            <table>
+                <thead>
+                <tr>
+                    <th class="text-left">Order ID</th>
+                    <th class="text-left">User</th>
+                    <th class="text-left">Stock</th>
+                    <th class="text-center">Buy Price</th>
+                    <th class="text-left">Sell Price</th>
+                    <th class="text-left">Profit</th>
+                    <th class="text-center"></th>
+                    <th class="text-center"></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in transactions_all %}
+                    <tr>
+                        <td><a class="fw-bold" href="#"> {{ item.id }} </a></td>
+                        <td>{{ request.user.username }}</td>
+                        <td>{{ item.stock }}</td>
+                        <td class="text-center">{{ item.buy_price }}</td>
+                        <td><span class="badge-pill c-success">{{ item.sell_price }}</span></td>
+                        <td><span class="badge-pill c-success">{{ item.profit }}</span></td>
+                        {% if item.sell_price == 0 %}
+                            <td class="text-center">
+                                <a href="{% url 'update_track' item.id %}">
+                                    <button type="button" class="btn btn-outline-danger">Sell</button>
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a href="{% url 'update_price' item.id %}">
+                                    <button type="button" class="btn btn-outline-success">Buy</button>
+                                </a>
+
+                            </td>
 
 
-    <!-- Table Body -->
-    <div class="bg-white mt-5 rounded-xl text-sm   text-gray-500 divide-y divide-indigo-50 overflow-x-auto  shadow">
-        {% for item in transactions_all %}
-            <div class="invoice-table-row flex items-left gap-x-1 px-3 py-2">
-                <div class="text-left">{{ item.stock }}</div>
-                <div class="text-center" id="first1_{{ forloop.counter }}">{{ item.shares }}</div>
-                <div class="text-center">{{ item.buy_price|floatformat:2 }}</div>
-                <div class="text-center" id="first2_{{ forloop.counter }}">{{ item.sell_price|floatformat:2 }}</div>
-                <div class="text-center" id="resultDiv_{{ forloop.counter }}">0.00</div>
-{#                <div class="text-center">{{ item.transaction_date|date:"d-m-Y" }}</div>#}
+                        {% endif %}
+                    </tr>
+                {% endfor %}
 
-                {% if  item.sell_price == 0 %}
-                    <div class="text-right">
-                        <a href="{% url 'update_track' item.id %}">
-                            <button type="button" class="btn  px-4 py-1 rounded-lg bg-rose-400  text-white "
-                                    style="margin-left: 10px;">Sell
-                            </button>
-                        </a>
-                    </div>
+                </tbody>
+            </table>
+        </div>
 
-                    <div class="text-right">
-                    <a href="{% url 'update_price' item.id %}">
-                        <button type="button" class="btn  px-4 py-1 rounded-lg bg-yellow-200  text-gray-600 "
-                                style="margin-left: 10px;">Buy
-                        </button>
-                    </a>
-                    </div>
-                {% endif %}
+    </div>
 
 
-
-                <script>
-                    // İlk değeri alın
-                    var firstValue = parseFloat(document.getElementById('first1_{{ forloop.counter }}').textContent);
-
-                    // İkinci değeri alın
-                    var secondValue = parseFloat(document.getElementById('first2_{{ forloop.counter }}').textContent);
-
-                    // İki değeri çarpın
-                    var result = firstValue * secondValue;
-
-                    // Sonucu yeni bir div içine yerleştirin
-                    var resultDiv = document.getElementById('resultDiv_{{ forloop.counter }}');
-                    resultDiv.textContent = result.toFixed(2); // Sonucu virgülden sonra 2 basamakla sınırlayın
-                </script>
-            </div>
-        {% endfor %}
-
-    </div><!-- /Table Body -->
     <div class="text-right">
 
         <p class="text-gray-500 text-sm">

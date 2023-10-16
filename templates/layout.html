@@ -1,46 +1,34 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
+<body class="sim__menuleft__slider">
+<div class="initial__loading"></div>
+<!-- sidebar  -->
+
+{% include 'dashboard/sidebar.html' %}
+<!-- //////////////////////////////// -->
 {% include 'partials/_head.html' %}
-{% block css %}
 
-{% endblock %}
+<!-- header  -->
+{% include 'dashboard/d_header.html' %}
+<!-- //////////////////////////////// -->
 
-<body class="font-montserrat " style="font-family: 'Courier New', Courier, monospace;">
-{% include 'partials/messages.html' %}
 
-{% include 'partials/modal.html' %}
 {% block content %}
+    <body class="font-montserrat " style="font-family: 'Courier New', Courier, monospace;">
+    <div class="sim__layout">
 
 
+        <!-- Footer -->
+        {% include 'dashboard/d_footer.html' %}
+        <!-- ///////////////////////////////// -->
+
+
+    </div>
+
+    </body>
 {% endblock %}
 
-{% block scripts %}
-
-{% endblock %}
-
-<script>
 
 
-    function fadeOutAlert() {
-        var alert = document.getElementById("alert");
-        var opacity = 1;
-        var timer = setInterval(function () {
-            if (opacity <= 0) {
-                clearInterval(timer);
-                alert.remove();
-            }
-            alert.style.opacity = opacity;
-            opacity -= 0.05;
-        }, 50);
-    }
-
-    window.onload = function () {
-        fadeOutAlert();
-    }
-</script>
-
-
-</body>
-
-</html>

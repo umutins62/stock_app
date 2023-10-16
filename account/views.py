@@ -18,14 +18,14 @@ def user_login(request):
             login(request, user)
             return redirect("index")
         else:
-            return render(request, "account/login.html")
+            return render(request, "account/login_new.html")
     else:
-        return render(request, "account/login.html")
+        return render(request, "account/login_new.html")
 
 
 def user_logout(request):
     logout(request)
-    return redirect("user_login")
+    return redirect("index")
 
 
 def register(request):
@@ -53,5 +53,7 @@ def register(request):
 
     else:
         return render(request, "account/register.html")
+
+
 
 

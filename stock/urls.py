@@ -33,6 +33,11 @@ urlpatterns = [
     path('update_money/', views.update_money, name='update_money'),
     path('update_track/<int:id>/', views.update_track, name='update_track'),
     path('update_price/<int:id>/', views.update_price, name='update_price'),
+    path('settings/', views.app_settings, name='settings'),
+    path('dashboard/', views.dashboard, name='dashboard'),
+    path('messages/', views.my_messages, name='messages'),
+
+
 
 
 ]

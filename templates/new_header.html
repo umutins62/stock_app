@@ -1,0 +1,17 @@
+{% load static %}
+
+<header id="header" class="fixed-top">
+    <div class="container  d-flex align-items-center justify-content-between">
+<div class="logo">
+        <a href="{% url 'index' %}" class="logo"><img src="{% get_media_prefix %}logo.png" alt=""
+                                                      class="img-fluid"></a>
+
+    </div>
+
+        <!-- Uncomment below if you prefer to use text as a logo -->
+        <!-- <h1 class="logo"><a href="index.html">Butterfly</a></h1> -->
+
+        {% include 'partials/navbar.html' %}
+
+    </div>
+</header><!-- End Header -->

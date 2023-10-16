@@ -1,0 +1,165 @@
+{% load static %}
+<header class="sim__header">
+    <div class="sim__header__trigger">
+        <i class="las la-align-left sim__header__icon"></i>
+    </div>
+    <div class="sim__header_content">
+
+        <div class="sim__header__notify">
+            <img class="sim__header__notify__img" src="{% get_media_prefix %}img/images/bell.svg" alt="">
+            <span class="sim__header__notify__count">3</span>
+            <div class="sim__header__notify__area">
+                <div class="sim__header__notify__header">
+                    <span class="sim__header__notify__cap">Notifications</span>
+                    <a class="sim__header__notify__link" href="#">View All</a>
+                </div>
+                <div class="sim__header__notify__body">
+                    <a href="#" class="sim__header__notify__item">
+                        <div class="sim__header__notify__icon c-primary"><i class="las la-user-plus"></i></div>
+                        <p class="sim__header__notify__details">New User Registered<small
+                                class="sim__header__notify__time"><i class="las la-clock"></i>2 hours ago</small>
+                        </p>
+                    </a>
+                    <a href="#" class="sim__header__notify__item">
+                        <div class="sim__header__notify__icon c-info"><i class="las la-shopping-cart"></i></div>
+                        <p class="sim__header__notify__details">Your order is placed<small
+                                class="sim__header__notify__time"><i class="las la-clock"></i>3 hours ago</small>
+                        </p>
+                    </a>
+                    <a href="#" class="sim__header__notify__item">
+                        <div class="sim__header__notify__icon c-success"><i class="las la-comments"></i></div>
+                        <p class="sim__header__notify__details">Jaclyn Brunswick commented on Dashboard<small
+                                class="sim__header__notify__time"><i class="las la-clock"></i>5 hours ago</small>
+                        </p>
+                    </a>
+                    <a href="#" class="sim__header__notify__item">
+                        <div class="sim__header__notify__icon c-danger"><i class="las la-exclamation-triangle"></i>
+                        </div>
+                        <p class="sim__header__notify__details">Please Log Your Time Sheets<small
+                                class="sim__header__notify__time"><i class="las la-clock"></i>7 hours ago</small>
+                        </p>
+                    </a>
+                    <a href="#" class="sim__header__notify__item">
+                        <div class="sim__header__notify__icon c-warning"><i class="las la-shipping-fast"></i></div>
+                        <p class="sim__header__notify__details">Your item is shipped<small
+                                class="sim__header__notify__time"><i class="las la-clock"></i>10 hours ago</small>
+                        </p>
+                    </a>
+                    <a href="#" class="sim__header__notify__item">
+                        <div class="sim__header__notify__icon c-danger"><i class="las la-heart"></i></div>
+                        <p class="sim__header__notify__details">Carlos Crouch liked Admin<small
+                                class="sim__header__notify__time"><i class="las la-clock"></i>days ago</small></p>
+                    </a>
+                </div>
+                <div class="sim__header__notify__footer">
+                    <a class="sim__header__notify__seemore" href="#"><i class="las la-arrow-circle-right"></i>View
+                        More...</a>
+                </div>
+            </div>
+        </div>
+        <div class="sim__header__userwarapper">
+
+            {% if user.is_authenticated %}
+                {% if user.is_superuser %}
+                    {% if fullname == "" %}
+
+                        <span class="sim__header__userrole">Welcome  {{ user.username }}</span>
+                        <div class="sim__header__submenu">
+                            <a class="sim__header__submenu__link" href="{% url 'index' %}"><i
+                                    class="las la-question-circle"></i>Home</a>
+                            <a class="sim__header__submenu__link" href="{% url 'account' %}"><i
+                                    class="las la-user-circle"></i></i>My
+                                Account</a>
+                            <a class="sim__header__submenu__link"  href="#"><i class="las
+                            la-cog"></i>Settings</a>
+
+                            <a class="sim__header__submenu__link" href="{% url 'special_admin' %} target=_blank"><i
+                                    class="las la-lock"></i>Admin</a>
+                            <div class="sim__header__submenu__divider"></div>
+                            <a class="sim__header__submenu__link" href="{% url 'user_logout' %}"><i
+                                    class="las la-sign-out-alt"></i>Logout</a>
+                        </div>
+
+
+                    {% else %}
+
+
+                        <span class="sim__header__userrole">Welcome  {{ fullname }}</span>
+                        <div class="sim__header__submenu">
+                            <a class="sim__header__submenu__link" href="{% url 'index' %}"><i class="las
+                            la-question-circle"></i>Home</a>
+                            <a class="sim__header__submenu__link" href="{% url 'account' %}"><i class="las
+                            la-user-circle"></i></i>My
+                                Account</a>
+                            <a class="sim__header__submenu__link" href="#"><i class="las
+                            la-cog"></i>Settings</a>
+
+                            <a class="sim__header__submenu__link" href="{% url 'index' %}"><i class="las
+                            la-lock"></i>Admin</a>
+                            <div class="sim__header__submenu__divider"></div>
+                            <a class="sim__header__submenu__link" href="{% url 'user_logout' %}"><i class="las
+                            la-sign-out-alt"></i>Logout</a>
+                        </div>
+
+
+
+                    {% endif %}
+
+                {% else %}
+
+                    {% if fullname == "" %}
+
+                        <span class="sim__header__userrole">Welcome  {{ user.username }}</span>
+                        <div class="sim__header__submenu">
+                            <a class="sim__header__submenu__link" href="{% url 'index' %}"><i
+                                    class="las la-question-circle"></i>Home</a>
+                            <a class="sim__header__submenu__link" href="{% url 'account' %}"><i
+                                    class="las la-user-circle"></i></i>My
+                                Account</a>
+                            <a class="sim__header__submenu__link" href="#"><i class="las la-cog"></i>Settings</a>
+
+                            <div class="sim__header__submenu__divider"></div>
+                            <a class="sim__header__submenu__link" href="{% url 'user_logout' %}"><i
+                                    class="las la-sign-out-alt"></i>Logout</a>
+                        </div>
+
+
+                    {% else %}
+
+
+                        <span class="sim__header__userrole">Welcome  {{ fullname }}</span>
+                        <div class="sim__header__submenu">
+                            <a class="sim__header__submenu__link" href="{% url 'index' %}"><i class="las
+                            la-question-circle"></i>Home</a>
+                            <a class="sim__header__submenu__link" href="{% url 'account' %}"><i class="las
+                            la-user-circle"></i></i>My
+                                Account</a>
+                            <a class="sim__header__submenu__link" href="#"><i class="las
+                            la-cog"></i>Settings</a>
+
+                            <div class="sim__header__submenu__divider"></div>
+                            <a class="sim__header__submenu__link" href="{% url 'user_logout' %}"><i class="las
+                            la-sign-out-alt"></i>Logout</a>
+                        </div>
+
+
+
+                    {% endif %}
+
+                {% endif %}
+
+            {% endif %}
+
+
+        </div>
+    </div>
+</header>
+
+<script src="{% static 'js/jquery.min-1.js' %}"></script>
+    <script src="{% static 'js/main1.js' %}"></script>
+    <script>
+        $('.sim__menuLeft__submenu--toggled').click(function () {
+            $(this).next('.sim__menuLeft__item__submenu').slideToggle(400);
+            $(this).toggleClass('active-submenu');
+        });
+    </script>

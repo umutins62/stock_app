@@ -2,7 +2,11 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.db.models import Sum
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404, reverse
+from django.utils import translation
+
+from djangoStockApp import settings
 from stock.models import Stock, Transaction, MoneyTransaction, GeneralSettings
 from .forms import *
 from django.contrib import messages
@@ -12,58 +16,58 @@ from django.contrib.auth import update_session_auth_hash
 # Create your views here.
 def index(request):
     if request.user.is_authenticated:
-        stocks = Stock.objects.all()
+
         fullname = request.user.get_full_name()
-
-        transactions = Transaction.objects.filter(user=request.user).filter(status="0")
-        transactions1 = Transaction.objects.filter(user=request.user).filter(status="1")
-
-        money_transactions_w = MoneyTransaction.objects.filter(user=request.user).filter(
-            transaction_type__iexact="Withraw")
-        money_transactions_d = MoneyTransaction.objects.filter(user=request.user).filter(
-            transaction_type__iexact="Deposit")
-
-        deposit_total = sum([d.amount for d in money_transactions_d])
-        withdraw_total = sum([w.amount for w in money_transactions_w])
-
-        money_transactions = deposit_total - withdraw_total
-
-        general_settings = GeneralSettings.objects.all()
-
-        # image
-        image = GeneralSettings.objects.get(name='invoice').image
-
-        # total money
-
-        total_result_buy = sum(row.buy_price * row.shares for row in transactions1)
-        total_result_sell = sum(row.sell_price * row.shares for row in transactions1)
-        profit = total_result_sell - total_result_buy
-        try:  # try except bloğu eklendi
-            yuzde = (profit / total_result_buy) * 100
-        except ZeroDivisionError:
-            yuzde = 0
-
-        en_buyuk_profit = Transaction.objects.filter(user=request.user).order_by('-profit').first()
-        en_kucuk_profit = Transaction.objects.filter(user=request.user).order_by('profit').first()
-
+    #
+    #     transactions = Transaction.objects.filter(user=request.user).filter(status="0")
+    #     transactions1 = Transaction.objects.filter(user=request.user).filter(status="1")
+    #
+    #     money_transactions_w = MoneyTransaction.objects.filter(user=request.user).filter(
+    #         transaction_type__iexact="Withraw")
+    #     money_transactions_d = MoneyTransaction.objects.filter(user=request.user).filter(
+    #         transaction_type__iexact="Deposit")
+    #
+    #     deposit_total = sum([d.amount for d in money_transactions_d])
+    #     withdraw_total = sum([w.amount for w in money_transactions_w])
+    #
+    #     money_transactions = deposit_total - withdraw_total
+    #
+    #     general_settings = GeneralSettings.objects.all()
+    #
+    #     # image
+    #     image = GeneralSettings.objects.get(name='invoice').image
+    #
+    #     # total money
+    #
+    #     total_result_buy = sum(row.buy_price * row.shares for row in transactions1)
+    #     total_result_sell = sum(row.sell_price * row.shares for row in transactions1)
+    #     profit = total_result_sell - total_result_buy
+    #     try:  # try except bloğu eklendi
+    #         yuzde = (profit / total_result_buy) * 100
+    #     except ZeroDivisionError:
+    #         yuzde = 0
+    #
+    #     en_buyuk_profit = Transaction.objects.filter(user=request.user).order_by('-profit').first()
+    #     en_kucuk_profit = Transaction.objects.filter(user=request.user).order_by('profit').first()
+    #
         context = {
-            'stocks': stocks,
-            'transactions': transactions,
-            'money_transactions': money_transactions,
-            'general_settings': general_settings,
-            'image': image,
-            'total_sum': money_transactions,
-            'profit': profit,
-            'yuzde': yuzde,
-            'en_buyuk_profit': en_buyuk_profit,
-            'en_kucuk_profit': en_kucuk_profit,
+            # 'stocks': stocks,
+            # 'transactions': transactions,
+            # 'money_transactions': money_transactions,
+            # 'general_settings': general_settings,
+            # 'image': image,
+            # 'total_sum': money_transactions,
+            # 'profit': profit,
+            # 'yuzde': yuzde,
+            # 'en_buyuk_profit': en_buyuk_profit,
+            # 'en_kucuk_profit': en_kucuk_profit,
             'fullname': fullname,
 
         }
 
-        return render(request, "index.html", context=context)
+        return render(request, "index3.html",context=context)
     else:
-        return redirect('user_login')
+        return render(request, "index4.html")
 
 
 def alis_satis_hesapla(Transaction):
@@ -226,14 +230,14 @@ from django.contrib.auth.forms import PasswordChangeForm
 def change_password(request):
     fullname = request.user.get_full_name()
     if request.method == 'POST':
-        form = PasswordChangeForm(request.user, request.POST)
+        form = CustomPasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)
             messages.success(request, 'Şifre başarıyla güncellendi!')
             return redirect('account')
     else:
-        form = PasswordChangeForm(request.user)
+        form = CustomPasswordChangeForm(request.user)
 
     context = {
         'form': form,
@@ -344,3 +348,20 @@ def special_admin(request):
         return redirect('admin:index')
     else:
         raise PermissionDenied
+
+
+def app_settings(request):
+    return render(request, 'settings.html')
+
+def my_messages(request):
+    return render(request, 'messages.html')
+
+
+def dashboard(request):
+    fullname = request.user.get_full_name()
+    user= request.user
+    context = {
+        'fullname': fullname,
+        'user': user,
+    }
+    return render(request, 'dashboard/dashboard.html', context=context)
