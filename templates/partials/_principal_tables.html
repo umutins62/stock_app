@@ -7,9 +7,12 @@
     text-sm font-semibold  text-gray-600">
 
 
-
     </div><!-- /Table Header -->
-
+    <div class="text-right mb-3 mx-3">
+        <a href="{% url 'add_money' %}">
+            <button type="button" class="btn btn-outline-primary">Add</button>
+        </a>
+    </div>
 
     <!-- Table Body -->
     <div class="bg-white mt-5 rounded-xl text-sm   text-gray-500 divide-y divide-indigo-50 overflow-x-auto  shadow">
@@ -19,119 +22,31 @@
                     <thead>
                     <tr>
                         <th class="text-left">Order ID</th>
-                        <th class="text-left">Billing Name</th>
-                        <th class="text-left">Date</th>
-                        <th class="text-center">Total</th>
-                        <th class="text-left">Payment Status</th>
-                        <th class="text-left">Payment Method</th>
-                        <th class="text-center">View Details</th>
+                        <th class="text-left">User</th>
+                        <th class="text-left">Amount</th>
+                        <th class="text-left">Transaction Type</th>
+                        <th class="text-left"></th>
+
+
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td><a class="fw-bold" href="#"> #211226 </a></td>
-                        <td>Maria Anders</td>
-                        <td>10 Dec, 2021</td>
-                        <td class="text-center">$400</td>
-                        <td><span class="badge-pill c-success">Paid</span></td>
-                        <td><img class="align-middle credit-card" height="20"
-                                 src="{% get_media_prefix %}img/images/visa.svg" alt="">Visa
-                        </td>
-                        <td class="text-center">
-                            <button type="button" class="sim__btn__viewdetails">View Details</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="text-body fw-bold" href="#"> #211226 </a></td>
-                        <td>Christina Berglund</td>
-                        <td>10 Dec, 2021</td>
-                        <td class="text-center">$400</td>
-                        <td><span class="badge-pill c-danger">Chargeback</span></td>
-                        <td><img class="align-middle credit-card" height="20"
-                                 src="{% get_media_prefix %}img/images/discover.svg" alt="">Discover
-                        </td>
-                        <td class="text-center">
-                            <button type="button" class="sim__btn__viewdetails">View Details</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="text-body fw-bold" href="/dashboard"> #211226 </a></td>
-                        <td>Francisco Chang</td>
-                        <td>10 Dec, 2021</td>
-                        <td class="text-center">$400</td>
-                        <td><span class="badge-pill c-success">Paid</span></td>
-                        <td><img class="align-middle credit-card" height="20"
-                                 src="{% get_media_prefix %}img/images/mastercard.svg" alt="">Mastercard
-                        </td>
-                        <td class="text-center">
-                            <button type="button" class="sim__btn__viewdetails">View Details</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="text-body fw-bold" href="/dashboard"> #211226 </a></td>
-                        <td>Neal Matthews</td>
-                        <td>10 Dec, 2021</td>
-                        <td class="text-center">$400</td>
-                        <td><span class="badge-pill c-warning">Refund</span></td>
-                        <td><img class="align-middle credit-card paypal-border" height="20"
-                                 src="{% get_media_prefix %}img/images/paypal.svg" alt="">Paypal
-                        </td>
-                        <td class="text-center">
-                            <button type="button" class="sim__btn__viewdetails">View Details</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="fw-bold" href="#"> #211226 </a></td>
-                        <td>Roland Mendel</td>
-                        <td>10 Dec, 2021</td>
-                        <td class="text-center">$400</td>
-                        <td><span class="badge-pill c-success">Paid</span></td>
-                        <td><img class="align-middle credit-card" height="20"
-                                 src="{% get_media_prefix %}img/images/amex.svg" alt="">AMEX
-                        </td>
-                        <td class="text-center">
-                            <button type="button" class="sim__btn__viewdetails">View Details</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="text-body fw-bold" href="#"> #211226 </a></td>
-                        <td>Yoshi Tannamuri</td>
-                        <td>10 Dec, 2021</td>
-                        <td class="text-center">$400</td>
-                        <td><span class="badge-pill c-danger">Chargeback</span></td>
-                        <td><img class="align-middle credit-card" height="20"
-                                 src="{% get_media_prefix %}img/images/discover.svg" alt="">Discover
-                        </td>
-                        <td class="text-center">
-                            <button type="button" class="sim__btn__viewdetails">View Details</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="text-body fw-bold" href="/dashboard"> #211226 </a></td>
-                        <td>Giovanni Rovelli</td>
-                        <td>10 Dec, 2021</td>
-                        <td class="text-center">$400</td>
-                        <td><span class="badge-pill c-success">Paid</span></td>
-                        <td><img class="align-middle credit-card" height="20"
-                                 src="{% get_media_prefix %}img/images/visa.svg" alt="">Visa
-                        </td>
-                        <td class="text-center">
-                            <button type="button" class="sim__btn__viewdetails">View Details</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a class="text-body fw-bold" href="/dashboard"> #211226 </a></td>
-                        <td>John Doe</td>
-                        <td>10 Dec, 2021</td>
-                        <td class="text-center">$400</td>
-                        <td><span class="badge-pill c-warning">Refund</span></td>
-                        <td><img class="align-middle credit-card" height="20"
-                                 src="{% get_media_prefix %}img/images/mastercard.svg" alt="">Mastercard
-                        </td>
-                        <td class="text-center">
-                            <button type="button" class="sim__btn__viewdetails">View Details</button>
-                        </td>
-                    </tr>
+                    {% for item in money_transactions %}
+                        <tr>
+                            <td><a class="fw-bold" href="#"> {{ item.id }} </a></td>
+                            <td>{{ request.user.username }}</td>
+                            <td>{{ item.amount }}</td>
+                            <td class="text-left">{{ item.transaction_type }}</td>
+
+
+                            <td class="text-center">
+                                <a href="{% url 'update_money' %}">
+                                    <button type="button" class="btn btn-outline-warning">Update</button>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
                     </tbody>
                 </table>
             </div>

@@ -357,6 +357,10 @@ def my_messages(request):
     return render(request, 'messages.html')
 
 
+def my_notifications(request):
+    return render(request, 'Notifications.html')
+
+
 def dashboard(request):
     fullname = request.user.get_full_name()
     user= request.user

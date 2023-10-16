@@ -37,8 +37,19 @@
                         <td>{{ request.user.username }}</td>
                         <td>{{ item.stock }}</td>
                         <td class="text-center">{{ item.buy_price }}</td>
-                        <td><span class="badge-pill c-success">{{ item.sell_price }}</span></td>
-                        <td><span class="badge-pill c-success">{{ item.profit }}</span></td>
+                        <td><span class="badge-pill">{{ item.sell_price }}</span></td>
+                        {% if item.sell_price == 0 %}
+                            <td><span class="badge-pill">0.00</span></td>
+                        {% else %}
+                            {% if item.profit < 0 %}
+                                <td><span class="badge-pill c-danger">{{ item.profit }}</span></td>
+                            {% else %}
+
+                                <td><span class="badge-pill c-success">{{ item.profit }}</span></td>
+                            {% endif %}
+                        {% endif %}
+
+
                         {% if item.sell_price == 0 %}
                             <td class="text-center">
                                 <a href="{% url 'update_track' item.id %}">

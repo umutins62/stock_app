@@ -60,6 +60,20 @@ class TransactionForm(ModelForm):
 
 
 class MoneytransactionForm(ModelForm):
+    user = forms.ModelChoiceField(
+        queryset=User.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
+    STATUS = (
+        ('Withraw', 'Withraw'),
+        ('Deposit', 'Deposit'),
+    )
+    transaction_type = forms.ChoiceField(
+        choices=STATUS,
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+    amount = forms.DecimalField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     class Meta:
         model = MoneyTransaction
         fields = ['user', 'amount', 'transaction_type']

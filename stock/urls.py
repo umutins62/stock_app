@@ -36,6 +36,7 @@ urlpatterns = [
     path('settings/', views.app_settings, name='settings'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('messages/', views.my_messages, name='messages'),
+    path('notifications/', views.my_notifications, name='notifications'),
 
 
 
