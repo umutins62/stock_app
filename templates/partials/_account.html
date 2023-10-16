@@ -1,11 +1,6 @@
 {% load static %}
-<!-- Font Awesome -->
 
 
-<div class="mb-10">
-
-    <h1>Account</h1>
-</div>
 <form method="POST" class="form-horizontal mt-12">
     {% csrf_token %}
     {{ form.as_p }}
