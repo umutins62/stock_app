@@ -1,25 +1,44 @@
 {% load static %}
 {% load humanize %}
+
 <div class="sim__layout__content">
     <div class="sim__card">
         <div class="sim__card__single">
             <div class="sim__card__details">
-                <h3 class="sim__card__count">{{ total_sum|floatformat:2|intcomma }} $</h3>
+                {% if money_transactions < 0 %}
+                    <h3 class="sim__card__count" style="color: red">{{ money_transactions|intcomma }} $</h3>
+                {% else %}
+                    <h3 class="sim__card__count" style="color: green">{{ money_transactions|intcomma }} $</h3>
+                {% endif %}
+
                 <span class="sim__card__text">Transactions</span>
             </div>
             <div class="sim__card__icon c-primary">
                 <i class="las la-wallet"></i>
             </div>
         </div>
-        <div class="sim__card__single">
-            <div class="sim__card__details">
-                <h3 class="sim__card__count">{{ profit|intcomma }} $ % {{ yuzde|floatformat:2 }}</h3>
-                <span class="sim__card__text">Profit</span>
+        {% if profit < 0 %}
+            <div class="sim__card__single">
+                <div class="sim__card__details">
+                    <h3 class="sim__card__count">{{ profit|intcomma }} $ % {{ yuzde|floatformat:2 }}</h3>
+                    <span class="sim__card__text">Profit</span>
+                </div>
+                <div class="sim__card__icon c-danger">
+                    <i class="las la-money-bill-wave"></i>
+                </div>
             </div>
-            <div class="sim__card__icon c-info">
-                <i class="las la-money-bill-wave"></i>
+        {% else %}
+            <div class="sim__card__single">
+                <div class="sim__card__details">
+                    <h3 class="sim__card__count">{{ profit|intcomma }} $ % {{ yuzde|floatformat:2 }}</h3>
+                    <span class="sim__card__text">Profit</span>
+                </div>
+                <div class="sim__card__icon c-success">
+                    <i class="las la-money-bill-wave"></i>
+                </div>
             </div>
-        </div>
+        {% endif %}
+
         <div class="sim__card__single">
             <div class="sim__card__details">
                 <h5 class="sim__card__count">{{ en_buyuk_profit.stock }}
@@ -27,8 +46,8 @@
                     $</h5>
                 <span class="sim__card__text">Best performing stock</span>
             </div>
-            <div class="sim__card__icon c-danger">
-                <i class="las la-cube"></i>
+            <div class="sim__card__icon c-success">
+                <i class="las la-arrow-alt-circle-up"></i>
             </div>
         </div>
         <div class="sim__card__single">
@@ -38,8 +57,8 @@
                     $</h5>
                 <span class="sim__card__text">Worst performing stock</span>
             </div>
-            <div class="sim__card__icon c-success">
-                <i class="las la-dollar-sign"></i>
+            <div class="sim__card__icon c-danger">
+                <i class="las la-arrow-alt-circle-down"></i>
             </div>
         </div>
 
@@ -117,44 +136,43 @@
         <div class="sim__col sim__col--p">
             <div class="sim__col__header">
                 <div class="sim__col__header__details">
-                    <h4 class="sim__col__title">Social Source
+                    <h4 class="sim__col__title">Completed Trades
                     </h4>
                 </div>
                 <div class="sim__col__header__dropdown">
-                    <i class="las la-question-circle"></i>
+                    <i class="las la-ellipsis-v"></i>
                 </div>
-
             </div>
             <div class="sim__col__body">
-                <div class="sim__col__social">
-                    <span class="sim__col__social__logo"><i class="lab la-facebook"></i></span>
-                    <h5 class="sim__col__social__sale">Facebook&nbsp;-<span
-                            class="text-muted">&nbsp;125 sales</span></h5>
-                    <p class="sim__col__social__desc">Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien
-                        ut libero venenatis faucibus tincidunt.</p>
-                    <a class="sim__col__social__link" href="">Learn more<i class="las la-angle-right"></i></a>
-                </div>
+                {% for item in  transactions1 %}
 
-                <div class="sim__col__socialmedia">
-                    <div class="sim__col__socialmedia__info text-center">
-                            <span class="sim__col__socialmedia__icon sim__col__socialmedia__icon--fb"><i
-                                    class="lab la-facebook"></i></span>
-                        <h5 class="sim__col__socialmedia__name">Facebook</h5>
-                        <span class="sim__col__socialmedia__sales">125 sales</span>
+                    <div class="sim__col__browser__status">
+
+                        <div class="sim__col__media">
+                            <div class="sim__col__media__avatar c-success">
+                                <i class="las la-money-bill"></i>
+                            </div>
+                            <div class="sim__col__media__content">
+                                <h6 class="sim__col__text">{{ item.stock }}</h6>
+                                <small class="sim__col__stext">Buy Price:{{ item.buy_price }}</small>
+                            </div>
+                            <div class="sim__col__media__content">
+                                <h6 class="sim__col__text">{{ item.stock }}</h6>
+                                <small class="sim__col__stext">Sell Price:{{ item.sell_price }}</small>
+                            </div>
+                        </div>
+                        <div class="sim__col__media__content">
+                            <h6 class="sim__col__text">PROFİT</h6>
+                            {% for item in stock_profits %}
+                                <small class="sim__col__stext">{{ item }}</small>
+                            {% endfor %}
+
+                        </div>
                     </div>
-                    <div class="sim__col__socialmedia__info text-center">
-                            <span class="sim__col__socialmedia__icon sim__col__socialmedia__icon--twitter"><i
-                                    class="lab la-twitter"></i></span>
-                        <h5 class="sim__col__socialmedia__name">Twitter</h5>
-                        <span class="sim__col__socialmedia__sales">112 sales</span>
-                    </div>
-                    <div class="sim__col__socialmedia__info text-center">
-                            <span class="sim__col__socialmedia__icon sim__col__socialmedia__icon--instagram"><i
-                                    class="lab la-instagram"></i></span>
-                        <h5 class="sim__col__socialmedia__name">Instagram</h5>
-                        <span class="sim__col__socialmedia__sales">104 sales</span>
-                    </div>
-                </div>
+
+
+
+                {% endfor %}
 
 
             </div>
@@ -178,27 +196,26 @@
 
                         {% if item.transaction_type == "Withraw" %}
                             <div class="sim__col__media">
-                            <div class="sim__col__media__avatar c-success">
-                                <i class="las la-money-bill"></i>
+                                <div class="sim__col__media__avatar c-success">
+                                    <i class="las la-money-bill"></i>
+                                </div>
+                                <div class="sim__col__media__content">
+                                    <h6 class="sim__col__text">{{ item.transaction_type }}</h6>
+
+                                </div>
                             </div>
-                            <div class="sim__col__media__content">
-                                <h6 class="sim__col__text">Wallet</h6>
-                                <small class="sim__col__stext">{{ item.transaction_type }}</small>
-                            </div>
-                        </div>
                             <div class="sim__col__details">
                                 <span class="sim__col__text text-success fw-600">+ {{ item.amount }}</span>
                             </div>
                         {% elif item.transaction_type == "Deposit" %}
                             <div class="sim__col__media">
-                            <div class="sim__col__media__avatar c-danger">
-                                <i class="las la-money-bill"></i>
+                                <div class="sim__col__media__avatar c-danger">
+                                    <i class="las la-money-bill"></i>
+                                </div>
+                                <div class="sim__col__media__content">
+                                    <h6 class="sim__col__text">{{ item.transaction_type }}</h6>
+                                </div>
                             </div>
-                            <div class="sim__col__media__content">
-                                <h6 class="sim__col__text">Wallet</h6>
-                                <small class="sim__col__stext">{{ item.transaction_type }}</small>
-                            </div>
-                        </div>
                             <div class="sim__col__details">
                                 <span class="sim__col__text text-danger fw-600">- {{ item.amount }}</span>
                             </div>
@@ -282,4 +299,4 @@
 
 
 </div>
-</div>
+

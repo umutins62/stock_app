@@ -80,6 +80,14 @@ TEMPLATES = [
             ],
         },
     },
+{
+        "BACKEND": "django.template.backends.jinja2.Jinja2",
+        "DIRS": [BASE_DIR / 'jinja2_templates'],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            # Jinja2 için ek seçenekler (eğer varsa)
+        },
+    },
 ]
 
 WSGI_APPLICATION = "djangoStockApp.wsgi.application"

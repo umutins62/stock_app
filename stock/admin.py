@@ -29,6 +29,8 @@ class moneytransactionAdmin(admin.ModelAdmin):
                     ]
     list_editable = ['amount','transaction_type']
 
+    list_filter = ['user','transaction_type']
+
     class Meta:
         model = MoneyTransaction
 
@@ -38,6 +40,8 @@ class generalsettingsAdmin(admin.ModelAdmin):
 
                     ]
     list_editable = ['name','value','image']
+
+
 
     class Meta:
         model = GeneralSettings
