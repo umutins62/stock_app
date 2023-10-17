@@ -17,6 +17,7 @@ class transactionAdmin(admin.ModelAdmin):
 
                     ]
     list_editable = ['sell_price','shares','profit','status']
+    list_filter = ['user','stock','status']
 
     class Meta:
         model = Transaction

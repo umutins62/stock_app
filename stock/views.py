@@ -18,38 +18,38 @@ def index(request):
     if request.user.is_authenticated:
 
         fullname = request.user.get_full_name()
-    #
-    #     transactions = Transaction.objects.filter(user=request.user).filter(status="0")
-    #     transactions1 = Transaction.objects.filter(user=request.user).filter(status="1")
-    #
-    #     money_transactions_w = MoneyTransaction.objects.filter(user=request.user).filter(
-    #         transaction_type__iexact="Withraw")
-    #     money_transactions_d = MoneyTransaction.objects.filter(user=request.user).filter(
-    #         transaction_type__iexact="Deposit")
-    #
-    #     deposit_total = sum([d.amount for d in money_transactions_d])
-    #     withdraw_total = sum([w.amount for w in money_transactions_w])
-    #
-    #     money_transactions = deposit_total - withdraw_total
-    #
-    #     general_settings = GeneralSettings.objects.all()
-    #
-    #     # image
-    #     image = GeneralSettings.objects.get(name='invoice').image
-    #
-    #     # total money
-    #
-    #     total_result_buy = sum(row.buy_price * row.shares for row in transactions1)
-    #     total_result_sell = sum(row.sell_price * row.shares for row in transactions1)
-    #     profit = total_result_sell - total_result_buy
-    #     try:  # try except bloğu eklendi
-    #         yuzde = (profit / total_result_buy) * 100
-    #     except ZeroDivisionError:
-    #         yuzde = 0
-    #
-    #     en_buyuk_profit = Transaction.objects.filter(user=request.user).order_by('-profit').first()
-    #     en_kucuk_profit = Transaction.objects.filter(user=request.user).order_by('profit').first()
-    #
+        #
+        #     transactions = Transaction.objects.filter(user=request.user).filter(status="0")
+        #     transactions1 = Transaction.objects.filter(user=request.user).filter(status="1")
+        #
+        #     money_transactions_w = MoneyTransaction.objects.filter(user=request.user).filter(
+        #         transaction_type__iexact="Withraw")
+        #     money_transactions_d = MoneyTransaction.objects.filter(user=request.user).filter(
+        #         transaction_type__iexact="Deposit")
+        #
+        #     deposit_total = sum([d.amount for d in money_transactions_d])
+        #     withdraw_total = sum([w.amount for w in money_transactions_w])
+        #
+        #     money_transactions = deposit_total - withdraw_total
+        #
+        #     general_settings = GeneralSettings.objects.all()
+        #
+        #     # image
+        #     image = GeneralSettings.objects.get(name='invoice').image
+        #
+        #     # total money
+        #
+        #     total_result_buy = sum(row.buy_price * row.shares for row in transactions1)
+        #     total_result_sell = sum(row.sell_price * row.shares for row in transactions1)
+        #     profit = total_result_sell - total_result_buy
+        #     try:  # try except bloğu eklendi
+        #         yuzde = (profit / total_result_buy) * 100
+        #     except ZeroDivisionError:
+        #         yuzde = 0
+        #
+        #     en_buyuk_profit = Transaction.objects.filter(user=request.user).order_by('-profit').first()
+        #     en_kucuk_profit = Transaction.objects.filter(user=request.user).order_by('profit').first()
+        #
         context = {
             # 'stocks': stocks,
             # 'transactions': transactions,
@@ -65,7 +65,7 @@ def index(request):
 
         }
 
-        return render(request, "index3.html",context=context)
+        return render(request, "index3.html", context=context)
     else:
         return render(request, "index4.html")
 
@@ -353,6 +353,7 @@ def special_admin(request):
 def app_settings(request):
     return render(request, 'settings.html')
 
+
 def my_messages(request):
     return render(request, 'messages.html')
 
@@ -362,10 +363,62 @@ def my_notifications(request):
 
 
 def dashboard(request):
+    stocks = Stock.objects.all()
+
     fullname = request.user.get_full_name()
-    user= request.user
+
+    money_transactions_all = MoneyTransaction.objects.filter(user=request.user)
+
+    transactions = Transaction.objects.filter(user=request.user).filter(status="0")
+    transactions_count = Transaction.objects.filter(user=request.user).filter(status="0").count()
+    transactions1 = Transaction.objects.filter(user=request.user).filter(status="1")
+
+    money_transactions_w = MoneyTransaction.objects.filter(user=request.user).filter(
+        transaction_type__iexact="Withraw")
+    money_transactions_d = MoneyTransaction.objects.filter(user=request.user).filter(
+        transaction_type__iexact="Deposit")
+
+    deposit_total = sum([d.amount for d in money_transactions_d])
+    withdraw_total = sum([w.amount for w in money_transactions_w])
+
+    money_transactions = deposit_total - withdraw_total
+
+    general_settings = GeneralSettings.objects.all()
+
+    # image
+    image = GeneralSettings.objects.get(name='invoice').image
+
+    # total money
+
+    total_result_buy = sum(row.buy_price * row.shares for row in transactions1)
+    total_result_sell = sum(row.sell_price * row.shares for row in transactions1)
+    profit = total_result_sell - total_result_buy
+    try:  # try except bloğu eklendi
+        yuzde = (profit / total_result_buy) * 100
+    except ZeroDivisionError:
+        yuzde = 0
+
+    en_buyuk_profit = Transaction.objects.filter(user=request.user).order_by('-profit').first()
+    en_kucuk_profit = Transaction.objects.filter(user=request.user).order_by('profit').first()
+
+    user = request.user
     context = {
+        'stocks': stocks,
+        'transactions': transactions,
+        'money_transactions': money_transactions,
+        'general_settings': general_settings,
+        'image': image,
+        'total_sum': money_transactions,
+        'profit': profit,
+        'yuzde': yuzde,
+        'en_buyuk_profit': en_buyuk_profit,
+        'en_kucuk_profit': en_kucuk_profit,
         'fullname': fullname,
         'user': user,
+        'transactions_count': transactions_count,
+        'money_transactions_all': money_transactions_all,
+
     }
+
+
     return render(request, 'dashboard/dashboard.html', context=context)
