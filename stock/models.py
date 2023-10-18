@@ -85,8 +85,12 @@ class Transaction(models.Model):
 
     def save(self, *args, **kwargs):
         # Profit alanını hesapla ve kaydet
-        self.profit = (self.sell_price - self.buy_price) * self.shares
-        super().save(*args, **kwargs)
+        if self.sell_price > 0:
+            self.profit = (self.sell_price - self.buy_price) * self.shares
+            super().save(*args, **kwargs)
+        else:
+            self.profit = 0
+            super().save(*args, **kwargs)
 
 
     def __str__(self):
