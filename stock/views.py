@@ -322,7 +322,7 @@ def my_notifications(request):
     return render(request, 'Notifications.html')
 
 
-# views.py
+
 
 
 def dashboard(request):
@@ -345,7 +345,6 @@ def dashboard(request):
     withdraw_total = sum([w.amount for w in money_transactions_w])
 
     money_transactions = withdraw_total - deposit_total
-
     general_settings = GeneralSettings.objects.all()
 
     # image

@@ -144,35 +144,42 @@
                 </div>
             </div>
             <div class="sim__col__body">
-                {% for item in  transactions1 %}
+                {% for item in transactions1 %}
+    <div class="sim__col__browser__status">
+        <div class="sim__col__media">
+            {% if item.sell_price < item.buy_price %}
+                <div class="sim__col__media__avatar c-danger">
+                    <i class="las la-money-bill-wave"></i>
+                </div>
+            {% else %}
+                <div class="sim__col__media__avatar c-success">
+                    <i class="las la-money-bill-wave"></i>
+                </div>
+            {% endif %}
 
-                    <div class="sim__col__browser__status">
+            <div class="sim__col__media__content">
+                <h6 class="sim__col__text">{{ item.stock }}</h6>
+                <small class="sim__col__stext" id="buy_price_{{ forloop.counter }}">{{ item.buy_price }}</small>
+            </div>
+            <div class="sim__col__media__content">
+                <h6 class="sim__col__text">{{ item.stock }}</h6>
+                <small class="sim__col__stext" id="sell_price_{{ forloop.counter }}">{{ item.sell_price }}</small>
+            </div>
+        </div>
+        <div class="sim__col__media__content">
+            <h6 class="sim__col__text">PROFIT</h6>
+            <small class="sim__col__stext" id="result_{{ forloop.counter }}"></small>
+            <script>
+                var firstValue = parseFloat(document.getElementById('buy_price_{{ forloop.counter }}').textContent);
+                var secondValue = parseFloat(document.getElementById('sell_price_{{ forloop.counter }}').textContent);
+                var result = (secondValue - firstValue);
+                var resultDiv = document.getElementById('result_{{ forloop.counter }}');
+                resultDiv.textContent = result.toFixed(2);
+            </script>
+        </div>
+    </div>
+{% endfor %}
 
-                        <div class="sim__col__media">
-                            <div class="sim__col__media__avatar c-success">
-                                <i class="las la-money-bill"></i>
-                            </div>
-                            <div class="sim__col__media__content">
-                                <h6 class="sim__col__text">{{ item.stock }}</h6>
-                                <small class="sim__col__stext">Buy Price:{{ item.buy_price }}</small>
-                            </div>
-                            <div class="sim__col__media__content">
-                                <h6 class="sim__col__text">{{ item.stock }}</h6>
-                                <small class="sim__col__stext">Sell Price:{{ item.sell_price }}</small>
-                            </div>
-                        </div>
-                        <div class="sim__col__media__content">
-                            <h6 class="sim__col__text">PROFİT</h6>
-                            {% for item in stock_profits %}
-                                <small class="sim__col__stext">{{ item }}</small>
-                            {% endfor %}
-
-                        </div>
-                    </div>
-
-
-
-                {% endfor %}
 
 
             </div>
@@ -197,7 +204,7 @@
                         {% if item.transaction_type == "Withraw" %}
                             <div class="sim__col__media">
                                 <div class="sim__col__media__avatar c-success">
-                                    <i class="las la-money-bill"></i>
+                                    <i class="las la-wallet"></i>
                                 </div>
                                 <div class="sim__col__media__content">
                                     <h6 class="sim__col__text">{{ item.transaction_type }}</h6>
@@ -210,7 +217,7 @@
                         {% elif item.transaction_type == "Deposit" %}
                             <div class="sim__col__media">
                                 <div class="sim__col__media__avatar c-danger">
-                                    <i class="las la-money-bill"></i>
+                                    <i class="las la-wallet"></i>
                                 </div>
                                 <div class="sim__col__media__content">
                                     <h6 class="sim__col__text">{{ item.transaction_type }}</h6>
