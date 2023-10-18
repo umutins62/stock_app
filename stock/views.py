@@ -13,6 +13,7 @@ from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 
 
+
 # Create your views here.
 def index(request):
     if request.user.is_authenticated:
@@ -388,3 +389,9 @@ def dashboard(request):
     }
 
     return render(request, 'dashboard/dashboard.html', context=context)
+
+
+
+
+
+

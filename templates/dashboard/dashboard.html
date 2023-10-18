@@ -3,4 +3,13 @@
 {% block content %}
     {% include 'dashboard/content.html' %}
 
+    <script src="../../Static/js/jquery.min-1.js"></script>
+    <script src="../../Static/js/main1.js"></script>
+    <script>
+        $('.sim__menuLeft__submenu--toggled').click(function () {
+            $(this).next('.sim__menuLeft__item__submenu').slideToggle(400);
+            $(this).toggleClass('active-submenu');
+        });
+    </script>
+
 {% endblock %}

@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'stock.apps.StockConfig',
     'django.contrib.humanize',
+    'django_matplotlib',
     'account',
 ]
 
@@ -80,7 +81,7 @@ TEMPLATES = [
             ],
         },
     },
-{
+    {
         "BACKEND": "django.template.backends.jinja2.Jinja2",
         "DIRS": [BASE_DIR / 'jinja2_templates'],
         "APP_DIRS": True,

@@ -1,14 +1,19 @@
 {% load static %}
 <header class="sim__header">
+
     <div class="sim__header__trigger">
         <i class="las la-align-left sim__header__icon"></i>
     </div>
-    <div class="sim__header_content">
 
+    <div class="sim__header_content">
+            <a href="{% url 'index' %}" class="no-underline mx-4" style="text-decoration: none;color: #6E6B7B">Home</a>
         <div class="sim__header__notify">
+
             <img class="sim__header__notify__img" src="{% get_media_prefix %}img/images/bell.svg" alt="">
             <span class="sim__header__notify__count">3</span>
+
             <div class="sim__header__notify__area">
+
                 <div class="sim__header__notify__header">
                     <span class="sim__header__notify__cap">Notifications</span>
                     <a class="sim__header__notify__link" href="#">View All</a>
@@ -63,14 +68,14 @@
                 {% if user.is_superuser %}
                     {% if fullname == "" %}
 
-                        <span class="sim__header__userrole">Welcome  {{ user.username }}</span>
+                        <span class="sim__header__userrole">Welcome {{ user.username }}</span>
                         <div class="sim__header__submenu">
                             <a class="sim__header__submenu__link" href="{% url 'index' %}"><i
                                     class="las la-question-circle"></i>Home</a>
                             <a class="sim__header__submenu__link" href="{% url 'account' %}"><i
                                     class="las la-user-circle"></i></i>My
                                 Account</a>
-                            <a class="sim__header__submenu__link"  href="#"><i class="las
+                            <a class="sim__header__submenu__link" href="#"><i class="las
                             la-cog"></i>Settings</a>
 
                             <a class="sim__header__submenu__link" href="{% url 'special_admin' %}"><i
@@ -84,7 +89,7 @@
                     {% else %}
 
 
-                        <span class="sim__header__userrole">Welcome  {{ fullname }}</span>
+                        <span class="sim__header__userrole">Welcome {{ fullname }}</span>
                         <div class="sim__header__submenu">
                             <a class="sim__header__submenu__link" href="{% url 'index' %}"><i class="las
                             la-question-circle"></i>Home</a>
@@ -110,7 +115,7 @@
 
                     {% if fullname == "" %}
 
-                        <span class="sim__header__userrole">Welcome  {{ user.username }}</span>
+                        <span class="sim__header__userrole">Welcome {{ user.username }}</span>
                         <div class="sim__header__submenu">
                             <a class="sim__header__submenu__link" href="{% url 'index' %}"><i
                                     class="las la-question-circle"></i>Home</a>
@@ -128,7 +133,7 @@
                     {% else %}
 
 
-                        <span class="sim__header__userrole">Welcome  {{ fullname }}</span>
+                        <span class="sim__header__userrole">Welcome {{ fullname }}</span>
                         <div class="sim__header__submenu">
                             <a class="sim__header__submenu__link" href="{% url 'index' %}"><i class="las
                             la-question-circle"></i>Home</a>
@@ -157,10 +162,10 @@
 </header>
 
 <script src="{% static 'js/jquery.min-1.js' %}"></script>
-    <script src="{% static 'js/main1.js' %}"></script>
-    <script>
-        $('.sim__menuLeft__submenu--toggled').click(function () {
-            $(this).next('.sim__menuLeft__item__submenu').slideToggle(400);
-            $(this).toggleClass('active-submenu');
-        });
-    </script>
+<script src="{% static 'js/main1.js' %}"></script>
+<script>
+    $('.sim__menuLeft__submenu--toggled').click(function () {
+        $(this).next('.sim__menuLeft__item__submenu').slideToggle(400);
+        $(this).toggleClass('active-submenu');
+    });
+</script>

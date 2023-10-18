@@ -4,10 +4,12 @@
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.1.0/chart.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
 <aside class="sim__menuleft">
-    <div class="sim__menuleft__outer">
+    <div class="sim__menuleft__outer overflow-auto">
         <div class="sim__menuleft__brand sim__menuleft__brand--bg">
-            <h3 class="sim__menuleft__brand__name">STOCK TRADE</h3>
+            <img class="sim__menuleft__brand__logo" src="{% get_media_prefix %}img/images/buffer.svg" alt="logo">
+            <h5 class="sim__menuleft__brand__name">Stock Trade</h5>
         </div>
 
         <div class="sim__menuleft__content sim__menuleft__content--scroll">
@@ -59,12 +61,12 @@
                     </a>
                 </li>
                 {% if user.is_superuser %}
-                <li class="sim__menuleft__item">
-                    <a href="{% url 'messages' %}" class="sim__menuleft__item__link">
-                        <i class="sim__menuleft__item__icon las la-address-book"></i>
-                        <span class="sim__menuleft__item__title">Messages</span>
-                    </a>
-                </li>
+                    <li class="sim__menuleft__item">
+                        <a href="{% url 'messages' %}" class="sim__menuleft__item__link">
+                            <i class="sim__menuleft__item__icon las la-address-book"></i>
+                            <span class="sim__menuleft__item__title">Messages</span>
+                        </a>
+                    </li>
                 {% endif %}
 
 
@@ -79,3 +81,4 @@
         </div>
     </div>
 </aside>
+
