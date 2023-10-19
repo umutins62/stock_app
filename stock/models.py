@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 from django.contrib.auth.models import User
 
+
 class Stock(models.Model):
     symbol = models.CharField(
         verbose_name='Symbol',
@@ -54,15 +55,12 @@ class Transaction(models.Model):
         default=0.00,
     )
 
-
-    status=models.CharField(
+    status = models.CharField(
         verbose_name='status',
         default='',
         max_length=50,
         blank=True,
         help_text='Please enter your status')
-
-
 
     shares = models.IntegerField(
         verbose_name='Shares',
@@ -75,8 +73,7 @@ class Transaction(models.Model):
         blank=True,
         help_text='Please enter your transaction date')
 
-
-    transaction_edit_date= models.DateTimeField(
+    transaction_edit_date = models.DateTimeField(
         verbose_name='Transaction Edit Date',
         auto_now=True,
         blank=True,
@@ -92,7 +89,6 @@ class Transaction(models.Model):
             self.profit = 0
             super().save(*args, **kwargs)
 
-
     def __str__(self):
         return self.stock.name
 
@@ -101,7 +97,12 @@ class Transaction(models.Model):
         verbose_name_plural = 'Transactions'
         ordering = ['-transaction_date']
 
+
 class MoneyTransaction(models.Model):
+    TRANSACTION_TYPES = (
+        ('deposit', 'Deposit'),
+        ('withdraw', 'Withdraw'),
+    )
     user = models.ForeignKey(
         User, on_delete=models.CASCADE)
     amount = models.DecimalField(
@@ -111,7 +112,9 @@ class MoneyTransaction(models.Model):
     transaction_type = models.CharField(
         verbose_name='Transaction Type',
         default='',
-        max_length=10)
+        max_length=10,
+        choices=TRANSACTION_TYPES)
+
     transaction_date = models.DateTimeField(
         verbose_name='Transaction Date',
         auto_now_add=True,
@@ -127,6 +130,7 @@ class MoneyTransaction(models.Model):
         verbose_name = 'Money Transaction'
         verbose_name_plural = 'Money Transactions'
         ordering = ['-transaction_date']
+
 
 class GeneralSettings(models.Model):
     name = models.CharField(
@@ -147,7 +151,6 @@ class GeneralSettings(models.Model):
         blank=True,
         null=True,
         help_text='Please enter your image')
-
 
     def __str__(self):
         return self.name
@@ -180,7 +183,6 @@ class UserSettings(models.Model):
         blank=True,
         null=True,
         help_text='Please enter your image')
-
 
     def __str__(self):
         return self.name

@@ -66,8 +66,8 @@ class MoneytransactionForm(ModelForm):
     )
 
     STATUS = (
-        ('Withraw', 'Withraw'),
-        ('Deposit', 'Deposit'),
+        ('withraw', 'withraw'),
+        ('deposit', 'deposit'),
     )
     transaction_type = forms.ChoiceField(
         choices=STATUS,

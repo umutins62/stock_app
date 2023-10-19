@@ -1,16 +1,10 @@
 {% load static %}
-<!-- Font Awesome -->
 
-
-<div class="mb-10">
-
-    <h1>Change Password</h1>
-</div>
 <form method="POST" class="form-horizontal mt-12">
     {% csrf_token %}
     {{ form.as_p }}
 
-    <input class="btn btn-primary" type="submit" value="Update">
+    <input class="btn btn-primary" type="submit" value="Change">
 
 
 </form>

@@ -13,7 +13,6 @@ from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 
 
-
 # Create your views here.
 def index(request):
     if request.user.is_authenticated:
@@ -323,15 +322,13 @@ def my_notifications(request):
     return render(request, 'Notifications.html')
 
 
-
-
-
 def dashboard(request):
     stocks = Stock.objects.all()
 
     fullname = request.user.get_full_name()
 
-    money_transactions_all = MoneyTransaction.objects.filter(user=request.user)
+    money_transactions_all = MoneyTransaction.objects.filter(user=request.user)[0:5]
+    # money_transactions_all = MoneyTransaction.objects.filter(user=request.user).order_by('-transaction_date')[0:5]
 
     transactions = Transaction.objects.filter(user=request.user).filter(status="0")
     transactions_count = Transaction.objects.filter(user=request.user).filter(status="0").count()
@@ -344,8 +341,13 @@ def dashboard(request):
 
     deposit_total = sum([d.amount for d in money_transactions_d])
     withdraw_total = sum([w.amount for w in money_transactions_w])
-
     money_transactions = withdraw_total - deposit_total
+
+    trade_buy = Transaction.objects.filter(user=request.user)
+    total_stock = 0
+    for item in trade_buy:
+        total_stock += item.shares * item.buy_price
+
     general_settings = GeneralSettings.objects.all()
 
     # image
@@ -366,6 +368,12 @@ def dashboard(request):
 
     user = request.user
 
+    labels = []
+    data = []
+
+    for person in transactions1:
+        labels.append(person.stock)
+        data.append(person.buy_price)
 
     context = {
         'stocks': stocks,
@@ -383,15 +391,11 @@ def dashboard(request):
         'transactions_count': transactions_count,
         'money_transactions_all': money_transactions_all,
         'transactions1': transactions1,
-
-
-
+        'labels': labels,
+        'data': data,
+        'total_stock': total_stock,
+        'deposit_total': deposit_total,
+        'withdraw_total': withdraw_total,
     }
 
     return render(request, 'dashboard/dashboard.html', context=context)
-
-
-
-
-
-

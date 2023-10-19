@@ -1,16 +1,57 @@
+
+
+
+
+
+
 {% extends 'layout.html' %}
 {% load static %}
 
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
 {% block content %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
 
-    <div class="sim__layout__content">
+
+    <div class="container mt-12">
 
 
-        <main class="bg-indigo-50/60 w-full py-10 px-3 sm:px-10">
 
 
-            {% include 'partials/_update_stock.html' %}
-        </main>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card ">
+                    <header class="card-header">
+
+                        <h4 class="card-title">Update Stock</h4>
+                    </header>
+                    <article class="card-body">
+
+
+                         {% include 'partials/_update_stock.html' %}
+
+
+                    </article> <!-- card-body end .// -->
+
+                </div> <!-- card.// -->
+            </div> <!-- col.//-->
+
+        </div> <!-- row.//-->
+
+
     </div>
+    <!--container end.//-->
+
 
 {% endblock %}
+
+

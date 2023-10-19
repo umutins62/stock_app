@@ -1,18 +1,25 @@
 {% load static %}
 {% load humanize %}
 
-
 <div class="sim__layout__content">
     <div class="sim__card">
         <div class="sim__card__single">
             <div class="sim__card__details">
                 {% if money_transactions < 0 %}
-                    <h3 class="sim__card__count" style="color: red">{{ money_transactions|intcomma }} $</h3>
+                    <h3 class="sim__card__count" style="color: red">Available Money : {{ money_transactions|intcomma }}
+                        $</h3>
                 {% else %}
-                    <h3 class="sim__card__count" style="color: green">{{ money_transactions|intcomma }} $</h3>
+                    <h3 class="sim__card__count" style="color: green">Available Money :
+                        {{ money_transactions|intcomma }} $</h3>
                 {% endif %}
 
-                <span class="sim__card__text">Transactions</span>
+                <span class="sim__card__text">Money Spent : {{ total_stock|intcomma }} $</span>
+            <div>
+                <span class="sim__card__text">Principal : {{ withdraw_total|intcomma }} $</span>
+
+            </div>
+            <span class="sim__card__text">Walet</span>
+
             </div>
             <div class="sim__card__icon c-primary">
                 <i class="las la-wallet"></i>
@@ -47,7 +54,7 @@
                     $</h5>
                 <span class="sim__card__text">Best performing stock</span>
             </div>
-            <div class="sim__card__icon c-success">
+            <div class="sim__card__icon c-primary">
                 <i class="las la-arrow-alt-circle-up"></i>
             </div>
         </div>
@@ -58,7 +65,7 @@
                     $</h5>
                 <span class="sim__card__text">Worst performing stock</span>
             </div>
-            <div class="sim__card__icon c-danger">
+            <div class="sim__card__icon c-primary">
                 <i class="las la-arrow-alt-circle-down"></i>
             </div>
         </div>
@@ -69,7 +76,7 @@
         <div class="sim__col sim__col--p">
             <div class="sim__col__header">
                 <div class="sim__col__header__details">
-                    <h4 class="sim__col__title">Graphs</h4>
+                    <h4 class="sim__col__title">Profit Graph</h4>
                 </div>
                 <div class="sim__col__header__dropdown">
                     <i class="las la-ellipsis-v"></i>
@@ -85,10 +92,10 @@
                     var myChart = new Chart(ctx, {
                         type: 'line',
                         data: {
-                            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                            labels: {{ labels|safe }},
                             datasets: [{
-                                label: '# of Votes',
-                                data: [12, 19, 3, 5, 2, 3],
+                                label: '# Profit',
+                                data: {{ data|safe }},
                                 backgroundColor: [
                                     'rgba(255, 99, 132, 0.2)',
                                     'rgba(54, 162, 235, 0.2)',
@@ -137,11 +144,11 @@
                         <div class="sim__col__media">
                             {% if item.sell_price < item.buy_price %}
                                 <div class="sim__col__media__avatar c-danger">
-                                    <i class="las la-money-bill-wave"></i>
+                                    <i class="las la-arrow-alt-circle-down"></i>
                                 </div>
                             {% else %}
                                 <div class="sim__col__media__avatar c-success">
-                                    <i class="las la-money-bill-wave"></i>
+                                    <i class="las la-arrow-alt-circle-up"></i>
                                 </div>
                             {% endif %}
 
@@ -200,7 +207,7 @@
 
                     <div class="sim__col__browser__status">
 
-                        {% if item.transaction_type == "Withraw" %}
+                        {% if item.transaction_type == "withraw" %}
                             <div class="sim__col__media">
                                 <div class="sim__col__media__avatar c-success">
                                     <i class="las la-wallet"></i>
@@ -213,7 +220,7 @@
                             <div class="sim__col__details">
                                 <span class="sim__col__text text-success fw-600">+ {{ item.amount }}</span>
                             </div>
-                        {% elif item.transaction_type == "Deposit" %}
+                        {% elif item.transaction_type == "deposit" %}
                             <div class="sim__col__media">
                                 <div class="sim__col__media__avatar c-danger">
                                     <i class="las la-wallet"></i>
