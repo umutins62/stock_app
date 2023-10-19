@@ -1,3 +1,5 @@
+import json
+
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
@@ -368,12 +370,8 @@ def dashboard(request):
 
     user = request.user
 
-    labels = []
-    data = []
-
-    for person in transactions1:
-        labels.append(person.stock)
-        data.append(person.buy_price)
+    data = [float(t.profit) for t in transactions1]
+    labels = [t.stock.symbol for t in transactions1]
 
     context = {
         'stocks': stocks,
@@ -391,11 +389,11 @@ def dashboard(request):
         'transactions_count': transactions_count,
         'money_transactions_all': money_transactions_all,
         'transactions1': transactions1,
-        'labels': labels,
-        'data': data,
         'total_stock': total_stock,
         'deposit_total': deposit_total,
         'withdraw_total': withdraw_total,
+        'labels_json': labels,
+        'data_json': data,
     }
 
     return render(request, 'dashboard/dashboard.html', context=context)
