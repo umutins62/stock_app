@@ -371,7 +371,8 @@ def dashboard(request):
     user = request.user
 
     data = [float(t.profit) for t in transactions1]
-    labels = [t.stock.symbol for t in transactions1]
+    # labels = [t.stock.symbol for t in transactions1]
+    labels = [t.transaction_edit_date.strftime('%d-%m-%Y') for t in transactions1]
 
     context = {
         'stocks': stocks,
