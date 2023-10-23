@@ -20,12 +20,14 @@ def index(request):
     if request.user.is_authenticated:
 
         fullname = request.user.get_full_name()
+        profile_settings = UserAdd.objects.filter(user=request.user)
         user = request.user
 
         context = {
 
             'fullname': fullname,
             'user': user,
+            'profile_settings': profile_settings,
 
         }
 

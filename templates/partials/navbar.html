@@ -1,31 +1,37 @@
 {% load static %}
+
+
 <nav id="navbar" class="navbar">
     <ul>
 
 
         {% if user.is_authenticated %}
             {% if user.is_superuser %}
-                <li><a class="nav-link scrollto" href="{% url 'user_logout' %}">Logout</a></li>
-                 <li><a class="nav-link scrollto" href="{% url 'dashboard' %}">Dashboard</a></li>
-                   {% if fullname == "" %}
-                        <li><a class="nav-link scrollto" href="{% url 'account' %}">{{ user.username }}</a></li>
-                    {% else %}
-                       <li><a class="nav-link scrollto" href="{% url 'account' %}">{{ fullname }}</a></li>
 
-                    {% endif %}
+                <li><a class="nav-link scrollto" href="{% url 'dashboard' %}">Dashboard</a></li>
+                {% if fullname == "" %}
+                    <li><a class="nav-link scrollto" href="{% url 'account' %}">{{ user.username }}</a></li>
+                {% else %}
+                    <li><a class="nav-link scrollto" href="{% url 'account' %}">{{ fullname }}</a></li>
+
+                {% endif %}
+                <li><a class="nav-link  mx-3" href=
+                        "{% url 'user_logout' %} ">Logout</a></li>
 
 
 
 
             {% else %}
-                    <li><a class="nav-link scrollto" href="{% url 'user_logout' %}">Logout</a></li>
+
                 <li><a class="nav-link scrollto" href="{% url 'dashboard' %}">Dashboard</a></li>
                 {% if fullname == "" %}
-                        <li><a class="nav-link scrollto" href="{% url 'account' %}">{{ user.username }}</a></li>
-                    {% else %}
-                       <li><a class="nav-link scrollto" href="{% url 'account' %}">{{ fullname }}</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'account' %}">{{ user.username }}</a></li>
+                {% else %}
+                    <li><a class="nav-link scrollto" href="{% url 'account' %}">{{ fullname }}</a></li>
 
-                    {% endif %}
+                {% endif %}
+                <li><a class="nav-link scrollto" href=
+                        "{% url 'user_logout' %}">Logout</a></li>
 
 
             {% endif %}

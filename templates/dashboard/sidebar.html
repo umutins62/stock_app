@@ -54,28 +54,7 @@
                         <span class="sim__menuleft__item__title">Change Password</span>
                     </a>
                 </li>
-                <li class="sim__menuleft__item">
-                    <a href="{% url 'settings' %}" class="sim__menuleft__item__link">
-                        <i class="sim__menuleft__item__icon las la-prescription"></i>
-                        <span class="sim__menuleft__item__title">Settings</span>
-                    </a>
-                </li>
-                {% if user.is_superuser %}
-                    <li class="sim__menuleft__item">
-                        <a href="{% url 'messages' %}" class="sim__menuleft__item__link">
-                            <i class="sim__menuleft__item__icon las la-address-book"></i>
-                            <span class="sim__menuleft__item__title">Messages</span>
-                        </a>
-                    </li>
-                {% endif %}
 
-
-                <li class="sim__menuleft__item">
-                    <a href="{% url 'notifications' %}" class="sim__menuleft__item__link">
-                        <i class="sim__menuleft__item__icon las la-bell"></i>
-                        <span class="sim__menuleft__item__title">Notifications</span>
-                    </a>
-                </li>
 
             </ul>
         </div>
