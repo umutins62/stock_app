@@ -1,7 +1,8 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-
+from django.contrib import messages
+from stock.forms import userAddForm
 
 
 # Create your views here.
@@ -33,6 +34,8 @@ def register(request):
         return redirect("index")
 
     if request.method == "POST":
+
+
         username = request.POST["username"]
         email = request.POST["email"]
         password = request.POST["password"]
@@ -53,7 +56,3 @@ def register(request):
 
     else:
         return render(request, "account/register.html")
-
-
-
-

@@ -6,11 +6,11 @@
         <div class="sim__card__single">
             <div class="sim__card__details">
                 {% if money_transactions < 0 %}
-                    <h3 class="sim__card__count" style="color: red">Available Money : {{ money_transactions|intcomma }}
+                    <h3 class="sim__card__count" style="color: red">Available Money : {{ net_total|intcomma }}
                         $</h3>
                 {% else %}
                     <h3 class="sim__card__count" style="color: green">Available Money :
-                        {{ money_transactions|intcomma }} $</h3>
+                        {{ net_total|intcomma }} $</h3>
                 {% endif %}
 
                 <span class="sim__card__text">Money Spent : {{ total_stock|intcomma }} $</span>

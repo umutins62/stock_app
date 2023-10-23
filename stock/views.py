@@ -20,10 +20,12 @@ def index(request):
     if request.user.is_authenticated:
 
         fullname = request.user.get_full_name()
+        user = request.user
 
         context = {
 
             'fullname': fullname,
+            'user': user,
 
         }
 
@@ -105,18 +107,36 @@ def principal(request):
 
 def account(request):
     fullname = request.user.get_full_name()
+
+    user_additional_instance, created = UserAdd.objects.get_or_create(user=request.user)
+
     if request.method == 'POST':
         form = UserForm(request.POST, instance=request.user)
+        form1 = userAddForm(request.POST, request.FILES, instance=user_additional_instance)
+
         if form.is_valid():
-            form.save(commit=False)
-            return redirect('account')
+            form.save()
+            if form1.is_valid():
+                user_add = form1.save(commit=False)
+                user_add.user = request.user
+                user_add.save()
+                return redirect('dashboard')
+            ...
+
+        else:
+            # Eğer her iki formdan biri doğrulanmazsa bu durumu kullanıcıya belirtmek için bir hata mesajı ekleyebilirsiniz.
+            messages.error(request, 'Formda hatalar bulunmaktadır. Lütfen tekrar deneyiniz.')
+
     else:
+        form1 = userAddForm(instance=request.user)
         form = UserForm(instance=request.user)
 
     context = {
         'form': form,
+        'form1': form1,
         'fullname': fullname,
     }
+
     return render(request, 'account.html', context=context)
 
 
@@ -374,6 +394,8 @@ def dashboard(request):
     # labels = [t.stock.symbol for t in transactions1]
     labels = [t.transaction_edit_date.strftime('%d-%m-%Y') for t in transactions1]
 
+    net_total = money_transactions + profit
+
     context = {
         'stocks': stocks,
         'transactions': transactions,
@@ -395,6 +417,7 @@ def dashboard(request):
         'withdraw_total': withdraw_total,
         'labels_json': labels,
         'data_json': data,
+        'net_total': net_total,
     }
 
     return render(request, 'dashboard/dashboard.html', context=context)

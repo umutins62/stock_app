@@ -1,12 +1,9 @@
 {% load static %}
 
-
-<form method="POST" class="form-horizontal mt-12">
+<form method="POST"  enctype="multipart/form-data" class="form-horizontal mt-12" autocomplete="off">
     {% csrf_token %}
     {{ form.as_p }}
-
+    {{ form1.as_p }}
     <input class="btn btn-primary" type="submit" value="Update">
-
-
 </form>
 

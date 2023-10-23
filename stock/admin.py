@@ -57,5 +57,18 @@ class usersettingsAdmin(admin.ModelAdmin):
         model = GeneralSettings
 
 
+@admin.register(UserAdd)
+class useraddAdmin(admin.ModelAdmin):
+    list_display = ['id','user', 'image', 'phone', 'address'
+
+                    ]
+    list_editable = ['image', 'phone', 'address']
+
+    list_filter = ['user']
+
+    class Meta:
+        model = UserAdd
+
+
 
 

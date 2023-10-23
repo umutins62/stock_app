@@ -1,7 +1,7 @@
 from django.forms import ModelForm
 from django.contrib.auth.models import User
 from django import forms
-from stock.models import Stock, Transaction, MoneyTransaction
+from stock.models import Stock, Transaction, MoneyTransaction, UserAdd
 
 
 class AddStockForm(ModelForm):
@@ -143,3 +143,16 @@ class CustomPasswordChangeForm(PasswordChangeForm):
         self.fields['old_password'].widget.attrs['class'] = 'form-control'
         self.fields['new_password1'].widget.attrs['class'] = 'form-control'
         self.fields['new_password2'].widget.attrs['class'] = 'form-control'
+
+
+class userAddForm(ModelForm):
+    image = forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-control'}))
+    phone = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    address = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = UserAdd
+        fields = ['image', 'phone', 'address']
+
+
+

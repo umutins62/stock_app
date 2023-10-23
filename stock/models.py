@@ -29,6 +29,10 @@ class Stock(models.Model):
 
 
 class Transaction(models.Model):
+    TRANSACTION_TYPES = (
+        ('0', 'buy'),
+        ('1', 'sell'),
+    )
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE)
@@ -60,7 +64,8 @@ class Transaction(models.Model):
         default='',
         max_length=50,
         blank=True,
-        help_text='Please enter your status')
+        help_text='Please enter your status',
+        choices=TRANSACTION_TYPES)
 
     shares = models.IntegerField(
         verbose_name='Shares',
@@ -191,3 +196,43 @@ class UserSettings(models.Model):
         verbose_name = 'User Setting'
         verbose_name_plural = 'User Settings'
         ordering = ['-name']
+
+
+class UserAdd(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE)
+    image = models.ImageField(
+        verbose_name='Image',
+        upload_to='images/',
+        blank=True,
+        null=True,
+        help_text='Please enter your image')
+    phone = models.CharField(
+        verbose_name='Phone',
+        default='',
+        max_length=50,
+        blank=True,
+        help_text='Please enter your phone')
+    address = models.CharField(
+        verbose_name='Address',
+        default='',
+        max_length=50,
+        blank=True,
+        help_text='Please enter your address')
+    user_save_date = models.DateTimeField(
+        verbose_name='User Save Date',
+        auto_now_add=True,
+        blank=True,
+        help_text='Please enter your user save date'
+    )
+
+
+
+    def __str__(self):
+        return self.user.first_name
+
+    class Meta:
+        verbose_name = 'User Add'
+        verbose_name_plural = 'User Adds'
+        ordering = ['-user_save_date']
